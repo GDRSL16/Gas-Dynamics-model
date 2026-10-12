@@ -3,7 +3,7 @@ global  SUMMARY_ARRAY
 %op=[2000 2000 2000 2000 2000 2000 2000 2000 2000 2000 2000 2000];%
 op=[2000 2000 2000 2000 2000 2000 2000 23000 2000 23000 23000 2000];%
 %s=GET_DIVE_DATA_LOAD_TISSUE_KIN(1); %loads the data file consisting of 2 columns, 1:depth in atm, 2:pectoral temp in C
-for i=11:12
+for i=12:12
     %if i==4
    %     disp('skip')
    % else

@@ -1,0 +1,7 @@
+function y=LOAD_DEPTH_DATA
+disp('Please provide the name of the array of dive depth data.');
+[filename,pathname]=uigetfile('*.txt','Outcome Data File Name');%gives the name of file and path
+disp(['Data file name: ' filename]);%displays the file name chosen
+fullfilename=[pathname filename];%file has 4 columns: 1=dive number, 2=row for start of dive, 3=row for end of dive, 4=row for max dive depth
+y=load(fullfilename);
+return

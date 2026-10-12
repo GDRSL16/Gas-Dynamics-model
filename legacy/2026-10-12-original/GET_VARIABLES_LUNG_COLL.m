@@ -16,7 +16,9 @@ Pint_init=95.009576964007664;%ambient pressure in kPa after removing water vapor
 VTmax=0.5%0.5;%VTmax=maximum volume of trachea; BB=VTo
 VLinit=V_LUNG-VTmax; %VLinit=initial dive lung volume at surface and what I need is start alveolar volume ; BB=VLo2, set equal to V_LUNG at the start of the dive
 FLAGGA=0;%set to 0 if Pint <= Pamb and no tracheal collapse else it is set to 1 and use tracheal collapse
-VLmax=0.0504*M_B;%ax volume defined as 50.4 ml/kg for elephant seal and is alveolia + trachea and I need max alveolar volume in Kooyman et al. AmJP 1972 assumed to be close to max insp volume,%VLmax=maximum volume of lung; BB=VLo
+VLmax=0.025*M_B;%25 ml/kg from Zimmer et al., 2007, Miller et al., 2016
+
+%VLmax=0.0504*M_B;%ax volume defined as 50.4 ml/kg for elephant seal and is alveolia + trachea and I need max alveolar volume in Kooyman et al. AmJP 1972 assumed to be close to max insp volume,%VLmax=maximum volume of lung; BB=VLo
 TAC=VLmax-VTmax;%To keep with BBs abbreviations, TAC is total alveolar volumei
 VTinit=VTmax;%VTinit=initial tracheal volume; BB=VTo2
 VT=VTinit;
