@@ -3,6 +3,13 @@ function GET_VARIABLES_LUNG_COLL(n_O2_LUNG,n_CO2_LUNG, n_N2_LUNG)
 global VLinit VLmax VTinit VTmax Pint_init KP A1 A2 A3 A4  FLAGGA VLprev  VT VLmin VL Pint NN VLinit0 CLUNG VLprev0
 global  LUNG_VOL GAS_CONSTANT M_B V_LUNG TAC
 
+%VLmax = total lung capacity at the relevant reference condition
+%VTmax = tracheal/dead-space volume
+%V_LUNG = functional lung volume available for the breath
+%VLinit = alveolar volume at the beginning of a dive
+%V_BREATH = volume exchanged during the breath
+%TAC    = total alveolar capacity = VLmax - VTmax
+
 %%%%%%%%%%%%%%%%%%%%START INITILIZATION FOR LUNG COLLAPSE%%%%%%%%%%%%%%%%%%%%%%
 A1=0;
 A2=1.1063;
