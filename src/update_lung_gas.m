@@ -6,8 +6,7 @@ function [n_N2_art_t,P_N2_art_t,n_O2_art_t,P_O2_art_t, n_CO2_art_t,P_CO2_art_t]=
 global  TEMP_ARRAY N2_ARRAY BLOOD_PARTITIONS_ART BLOOD_PARTITIONS_VEN B_VOL_PACKAGE_VEN SN2_BLOOD SO2_BLOOD SCO2_BLOOD
 global O2_ARRAY CO2_ARRAY SURFACE_VALUE  R  ALV_SURFACE_VALUE P_AMB 
 global Pint Pint_init  VLinit VLinit0 ART_BLOOD_ARRAY VLprev0 VLprev LUNG_VOL FLAGGA
-global V_LUNG V_BREATH BREATH_FRACTION
-global BREATH_FLAG VTinit VLmax F_INSPIRED_N2 F_INSPIRED_CO2 F_INSPIRED_O2%Added October 13 2026 to keep track of breaths
+global BREATH_FLAG VTinit VLmax TAC
 %Pamb is the pressure at time t and t-1
 
 rt=R*(273+pect);%assuming that blood temp is equal to pectoral muscle 
@@ -18,20 +17,24 @@ art_N2=BLOOD_PARTITIONS_ART;%this is the last arterial blood package which excha
 %%%%%%%%%%%computation of shunt has to be moved to GET_GAS_FLUX
 %%%%%%%%%%%%%%computes shunt from lung collapse model%%%%%%%%%%%%%%%%
  
-   shunt=est_va(i,rt);%a fraction of the total driving pressure
-   
+   % A breath bypasses est_va and lung collapse.
+   % At exact surface pressure without a breath, preserve the prior volume
+   % instead of allowing est_va to reset it to VLinit0.
+   if BREATH_FLAG(i)==1
+       shunt=0;
+       LUNG_VOL(i,5)=0;
+   elseif P_AMB(i)==SURFACE_VALUE
+       LUNG_VOL(i,1:2)=LUNG_VOL(i-1,1:2);
+       LUNG_VOL(i,3)=P_AMB(i)*101.3;
+       LUNG_VOL(i,4)=P_AMB(i)*101.3;
+       LUNG_VOL(i,5)=0;
+       shunt=0;
+   else
+       shunt=est_va(i,rt);
+   end
+   getlungvol=LUNG_VOL(i,1)+LUNG_VOL(i,2);
 
-   getlungvol=LUNG_VOL(i,1)+LUNG_VOL(i,2); %need this to calculate lung pressures when diving
-    %%%%%%%%%%%%%%computes shunt from lung collapse model%%%%%%%%%%%%%%%%
-    %%%%%%%%%%%lung collapse at certain depth%%%%%%%%%%%
-    %if P_AMB(i)>6.57;%3.75= 30mpressures(4ATA), 6.57 = 60m (8ATA), 15.9=160m (17ATA) are in ATA so surface is 1 ATA, thus depth is depth=(P_AMB-1)*10-PH2O so 8.44 is 80m, as PH2O at 37C is 0.0621
-    %   shunt=1;%fractional shunt
-    %else 
-    %  shunt=0;
-    %end   
-    %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-
-P_N2_ven_tmin1=TEMP_ARRAY((art_N2+ven_N2),1,1);%venous partial pressure of N2 
+P_N2_ven_tmin1=TEMP_ARRAY((art_N2+ven_N2),1,1);%partial pressure of N2 
 n_N2_ven_tmin1=TEMP_ARRAY((art_N2+ven_N2),2,1); %the number of moles in the venuous blood at the start of the routine
 P_N2_lung_tmin1=N2_ARRAY(i-1,5,1);%the partial pressure based of N2 in the lung at t-1.
 n_N2_lung_tmin1=N2_ARRAY(i-1,5,2);%the number of moles N2 in the lung at time t-1
@@ -46,92 +49,94 @@ n_CO2_ven_tmin1=TEMP_ARRAY((art_N2+ven_N2),2,3); %the number of moles in the ven
 P_CO2_lung_tmin1=CO2_ARRAY(i-1,5,1);%the partial pressure based of N2 in the lung at t-1.
 n_CO2_lung_tmin1=CO2_ARRAY(i-1,5,2);%the number of moles N2 in the lung at time t-1
 
-%if Pamb(1)==SURFACE_VALUE && Pamb(2)==SURFACE_VALUE %case A in note book p. 25 at surface, SURFACE_VALUE=Pamb at surface, defined in beakedwhale_tissue_kinetics1
-if BREATH_FLAG(i)==1 
-    V_old_total = LUNG_VOL(i-1,1) + LUNG_VOL(i-1,2);
-
-    if V_old_total < VTinit
-        error('Previous lung volume is below the surface residual volume.');
+if BREATH_FLAG(i)==1
+    % Finite breath at the current dry ambient pressure.
+    % Gas order [N2 O2 CO2]. No tissue exchange during this single event.
+    V_old=LUNG_VOL(i-1,1)+LUNG_VOL(i-1,2);
+    V_residual=VTinit;
+    V_inspired=TAC;  % Full inspiration in this first test (TLC minus tracheal volume).
+    
+    if V_old < V_residual || V_old <= 0
+        error('Breath at step %d: previous lung volume below residual volume',i);
     end
+    n_old=[n_N2_lung_tmin1,n_O2_lung_tmin1,n_CO2_lung_tmin1];
+    n_remaining=n_old*(V_residual/V_old);
+    F_inspired=[0.79,0.21,0];
+    % Calculate remaining gas volume at surface pressure
+    V_remaining=sum(n_remaining)*rt/P_AMB(i);
 
-    % Residual gas retained after exhalation
-    V_residual = VTinit;
+    % Maximum inspired volume to reach TLC
+    V_inspired=max(0,VLmax-V_remaining);
 
-    % Inspired volume, 
-    V_inspired = V_BREATH;
+    % Add inspired gas
+    n_inspired=F_inspired*P_AMB(i)*V_inspired/rt;
 
-    if V_residual + V_inspired > VLmax
-        error('Breath volume exceeds total lung capacity.');
-    end
-    % Final lung volume after inhalation
-    V_final = V_residual + V_inspired;
-
-    % Gas remaining after exhalation
-    n_old = [ ...
-        N2_ARRAY(i-1,5,2), ...
-        O2_ARRAY(i-1,5,2), ...
-        CO2_ARRAY(i-1,5,2)];
-
-    n_residual = n_old .* (V_residual/V_old_total);
-
-    % Inspired gas entering the lung
-    n_inspired = [ ...
-        F_INSPIRED_N2, ...
-        F_INSPIRED_O2, ...
-        F_INSPIRED_CO2] .* SURFACE_VALUE .* V_inspired ./ rt;
-
-    % New finite lung gas
-    n_new = n_residual + n_inspired;
-
-    % New partial pressures
-    P_lung = n_new .* rt ./ V_final;
-
-    P_N2_lung_t = P_lung(1);
-    n_N2_lung_t = n_new(1);
-
-    P_O2_lung_t = P_lung(2);
-    n_O2_lung_t = n_new(2);
-
-    P_CO2_lung_t = P_lung(3);
-    n_CO2_lung_t = n_new(3);
-
-    % Temporary perfect-equilibrium arterial calculation
-    P_N2_art_t = P_N2_lung_t;
-    n_N2_art_t = ...
-        B_VOL_PACKAGE_VEN * SN2_BLOOD * P_N2_art_t / rt;
-
-    P_O2_art_t = P_O2_lung_t;
-    n_O2_art_t = ...
-        B_VOL_PACKAGE_VEN * ...
-        blood_Co2(P_CO2_lung_t,P_O2_lung_t) / rt;
-
-    P_CO2_art_t = P_CO2_lung_t;
-    n_CO2_art_t = ...
-        B_VOL_PACKAGE_VEN * ...
-        blood_Cco2(P_O2_lung_t,P_CO2_lung_t) / rt;
-
-  
-else %case B, D-F in note book p. 25 only when diving
-   
-   [n_N2_lung_t, P_N2_art_t, n_N2_art_t]=iteration_N2_lung_search(rt,i,P_N2_lung_tmin1, n_N2_lung_tmin1, P_N2_ven_tmin1, n_N2_ven_tmin1,Pamb,shunt);
-   [n_O2_lung_t, P_O2_art_t, n_O2_art_t]=iteration_O2_lung_search(rt,i,P_O2_lung_tmin1, n_O2_lung_tmin1, P_O2_ven_tmin1, n_O2_ven_tmin1,Pamb,shunt);
-   [n_CO2_lung_t, P_CO2_art_t, n_CO2_art_t]=iteration_CO2_lung_search(rt,i,P_CO2_lung_tmin1, n_CO2_lung_tmin1, P_CO2_ven_tmin1, n_CO2_ven_tmin1,Pamb,shunt);
-   all=n_N2_lung_t+n_O2_lung_t+n_CO2_lung_t;
+    % Updated lung gas
+    n_new=n_remaining+n_inspired;
+    V_new=sum(n_new)*rt/P_AMB(i);    
  
-   P_N2_lung_t=n_N2_lung_t/all*Pamb(2);%fraction of N2 left in lung times ambient pressure, good old Dalton's law
-   P_O2_lung_t=n_O2_lung_t/all*Pamb(2);
-   P_CO2_lung_t=n_CO2_lung_t/all*Pamb(2);
-   %%%%This section updates VLinit so it accounts for the changes in lung volume that occurs when N2, O2 and CO2 are removed or added from the lung 
-   if P_AMB(i)>P_AMB(1)%just in case
-      initialvalue=(N2_ARRAY(1,5,2)+O2_ARRAY(1,5,2)+CO2_ARRAY(1,5,2))*rt;%initial value is the value at row 1
-      currentvalue=(n_N2_lung_t+n_O2_lung_t+n_CO2_lung_t)*rt;
-      VLinit=VLinit0*currentvalue/initialvalue;%The initial dive lung volume is adjusted for next iteration of lung collapse to inc or dec the volume according to the number of moles N2 that is added or removed.
-   %elseif P_AMB(i)==P_AMB(1)%at the surface
-    %   VLinit=VLinit0;
-    % %  VLprev=VLprev0;
-    %  Pint=Pint_init;
-     % FLAGGA=0;
-   end
+    if V_new < VTinit || V_new > VLmax+1e-8
+        error('Breath at step %d: derived lung volume %.6f L outside bounds',i,V_new);
+    end
+    % ===== VALIDATION OF BREATH CALCULATION =====
+    % Gas order: N2, O2, CO2
+
+    % 1. Conservation of gas moles
+    mole_error = n_new - (n_remaining + n_inspired);
+
+    % 2. Pressure-volume consistency
+    pressure_error = sum(n_new)*rt/V_new - P_AMB(i);
+
+    % 3. Lung volume constraints
+    volume_ok = V_new >= VTinit && V_new <= VLmax+1e-8;
+
+    % 4. Check physical gas amounts
+    moles_ok = ~any(~isfinite(n_new)) && ~any(n_new < 0);
+
+    fprintf('Breath %d: V=%.4f L, mole error=%.2e, pressure error=%.2e\n', ...
+        i,V_new,max(abs(mole_error)),abs(pressure_error));
+
+    assert(max(abs(mole_error)) < 1e-10, ...
+        'Gas mole conservation failed');
+
+    assert(abs(pressure_error) < 1e-10, ...
+        'Pressure-volume consistency failed');
+
+    assert(volume_ok, 'Lung volume outside limits');
+    assert(moles_ok, 'Invalid gas amounts');
+    % ===== END VALIDATION =====
+    
+    
+    P_new=n_new*rt/V_new;
+    LUNG_VOL(i,1)=V_new-VTinit;
+    LUNG_VOL(i,2)=VTinit;
+    Pint=P_AMB(i)*101.3;
+    LUNG_VOL(i,3)=Pint;
+    LUNG_VOL(i,4)=P_AMB(i)*101.3;
+    LUNG_VOL(i,5)=0;
+    VLinit=LUNG_VOL(i,1);
+    VLprev=VLinit;
+    FLAGGA=0;
+    % Reuse the original surface arterial equilibrium functions, but pass
+    % the computed gas state rather than fixed ALV_SURFACE_VALUE.
+    breath_gas=[P_new(:),n_new(:)];
+    [P_N2_lung_t,n_N2_lung_t,P_N2_art_t,n_N2_art_t]=update_N2_case_A_or_C(B_VOL_PACKAGE_VEN,SN2_BLOOD,rt,breath_gas);
+    [P_O2_lung_t,n_O2_lung_t,P_O2_art_t,n_O2_art_t]=update_O2_case_A_or_C(B_VOL_PACKAGE_VEN,SO2_BLOOD,rt,breath_gas);
+    [P_CO2_lung_t,n_CO2_lung_t,P_CO2_art_t,n_CO2_art_t]=update_CO2_case_A_or_C(B_VOL_PACKAGE_VEN,SCO2_BLOOD,rt,breath_gas);
+else
+    % All no-breath time steps use the original finite gas iteration.
+    [n_N2_lung_t,P_N2_art_t,n_N2_art_t]=iteration_N2_lung_search(rt,i,P_N2_lung_tmin1,n_N2_lung_tmin1,P_N2_ven_tmin1,n_N2_ven_tmin1,Pamb,shunt);
+    [n_O2_lung_t,P_O2_art_t,n_O2_art_t]=iteration_O2_lung_search(rt,i,P_O2_lung_tmin1,n_O2_lung_tmin1,P_O2_ven_tmin1,n_O2_ven_tmin1,Pamb,shunt);
+    [n_CO2_lung_t,P_CO2_art_t,n_CO2_art_t]=iteration_CO2_lung_search(rt,i,P_CO2_lung_tmin1,n_CO2_lung_tmin1,P_CO2_ven_tmin1,n_CO2_ven_tmin1,Pamb,shunt);
+    all=n_N2_lung_t+n_O2_lung_t+n_CO2_lung_t;
+    P_N2_lung_t=n_N2_lung_t/all*Pamb(2);
+    P_O2_lung_t=n_O2_lung_t/all*Pamb(2);
+    P_CO2_lung_t=n_CO2_lung_t/all*Pamb(2);
+    % Apply the original mole-dependent volume reference adjustment at all
+    % no-breath pressures, including the surface. No surface reset.
+    initialvalue=(N2_ARRAY(1,5,2)+O2_ARRAY(1,5,2)+CO2_ARRAY(1,5,2))*rt;
+    currentvalue=(n_N2_lung_t+n_O2_lung_t+n_CO2_lung_t)*rt;
+    VLinit=VLinit0*currentvalue/initialvalue;
 end
 
 N2_ARRAY(i,5,1)=P_N2_lung_t;%updates lung N2 partial pressure

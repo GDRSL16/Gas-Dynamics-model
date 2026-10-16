@@ -20,12 +20,15 @@ This document describes the uploaded beaked-whale MATLAB implementation as writt
 - `update_tissue_N2.m`, `update_tissue_O2.m`, `update_tissue_CO2.m`: tissue exchange routines; `SAVEDATA.m` and other helpers produce outputs.
 
 **Note:** The call chain is a navigation aid, not a verified complete ordering of every operation. Use the line-by-line time-step sequence when changing the model.
+**AF comment (2026-10-15):** One important point, this alters perfusion during diving vs surface. It only alters the perfusion at the end and beginning of a dive and the level of change is set by the dive duration in the summary file. Here, we can "alter" what is considered a dive in the summary file and then the program will alter the dive response. This will not have any effect, I think, on gas exchange at the surface. We could, for example, during a breath. Send the animal to the surface, take the breath, and then go down again like it is "diving" but with renewed gas and still call that surface. 
 
 ## 3. Arrays and indexing
 
 The three gas state arrays are `N2_ARRAY`, `O2_ARRAY`, `CO2_ARRAY`. In `update_lung_gas.m`, `GAS_ARRAY(i-1,5,1)` supplies the previous lung gas partial pressure and `GAS_ARRAY(i-1,5,2)` supplies previous lung gas amount (moles). The same slots at row `i` receive updated values. Other compartments and array dimensions require a dedicated indexing audit.
 
 `LUNG_VOL(i,1)` is alveolar volume; `(i,2)` tracheal volume; `(i,3)` internal pressure; `(i,4)` ambient pressure; `(i,5)` shunt. The current `beakedwhale_tissue_kinetics1.m` documents this convention. **Unit caution:** `(i,3)` is assigned `Pint` in kPa-like units, and `(i,4)` is assigned `P_AMB(i)*101.3` in `est_va.m`, whereas `N2_lung_coll.m` assigns `(i,4)=PAMB` where `PAMB` is its kPa input. Check consistency across paths.
+
+**AF comment (2026-10-15):** here units varies among equations so care need to be taken to not use these as GLOBAL. For example, the calculation of lung compression was written using kPa so care need to be taken as depth is in ata.
 
 ## 4. Lung-volume variable dictionary (verified assignments)
 
@@ -48,11 +51,17 @@ The three gas state arrays are `N2_ARRAY`, `O2_ARRAY`, `CO2_ARRAY`. In `update_l
 
 **Critical:** In this snapshot `V_BREATH = BREATH_FRACTION*TAC`, **not** `BREATH_FRACTION*V_LUNG`. With `BREATH_FRACTION=1`, `V_BREATH` is 46.665 L for `M_B=2000 kg`, while `VLmax` is 50 L and `VTmax` is 3.335 L. The naming and choice of reference volume must be settled physiologically.
 
+**AF comment (2026-10-15):**The units for Pint_init and Pint are kPa, BREATH_FLAG not yet used. I agree, we need ti "fix" these volumes once and for all and then reorganize them and make sure they are not "altered" somewhere.
+
+**AF decision (2026-10-15):**Go through code and fix this at the end. Alternatively, fix first before we introduce new code.
+
 ## 5. Pressure and gas units: audit required
 
 `P_AMB` is described in comments as ambient pressure in ATA with water-vapor correction. `N2_lung_coll.m` receives `P_AMB(i)*101.3`, indicating conversion to kPa. The parameter `Pint_init=95.009576964007664` is commented as kPa after subtracting water vapor. The gas conversion `n = P*V/GAS_CONSTANT` and breath update `n = P*V/rt` require consistent pressure, volume and temperature units. Do not assume all `P_*` variables are in the same unit: code comments also mention mmHg for initial alveolar gas tensions.
 
 **Audit checklist:** record the value, unit, and conversion of `GAS_CONSTANT`, `rt`, `P_AMB`, `SURFACE_VALUE`, `PN2_alv_init`, `PO2_alv_init`, `PCO2_alv_init`, `Pint_init`, and every blood-gas pressure passed between functions.
+
+**AF comment (2026-10-15):** Yes, we need to make sure that functions that need units in kPa, or mmHg are only inside those functions and those pressures are not passed out. This should have worked in the initial program 
 
 ## 6. Existing finite-breath branch — code as uploaded
 
@@ -75,6 +84,7 @@ The three gas state arrays are `N2_ARRAY`, `O2_ARRAY`, `CO2_ARRAY`. In `update_l
 On non-breath steps it invokes all three `iteration_*_lung_search` functions. It also computes `VLinit=VLinit0*(current total lung moles)/(initial total lung moles)` **only if** `P_AMB(i)>P_AMB(1)`.
 
 `surface_breath_exchange.m` also exists as a standalone mixing helper, but `update_lung_gas.m` contains a separate breath calculation. The two implementations are not identical: the helper uses fractional replacement in a fixed gas space, whereas the active branch models exhalation to `VTinit` followed by inspiration. This is a potential source of conceptual drift.
+**AF comment (2026-10-15):** That is where we could start to check. The "volume" here needs to be correct and updated in the lung array and also the moles of the gases.
 
 ## 7. Priority technical issues before another simulation
 
@@ -95,7 +105,9 @@ On non-breath steps it invokes all three `iteration_*_lung_search` functions. It
 - Run multiple breaths separated by no-breath steps and check pressure, volume, `VLinit`, `VLprev` and `Pint` continuity.
 - Compare results at 0, 0.1 and 0.3 m equivalent pressures; distinguish pressure effects from ventilation effects.
 - Compare current code against the archived baseline on a short identical input, not a full two-hour run.
+**AF comment (2026-10-15):** These were run and do not work, the volume is not updated. We need to look at this and see where this fails. Also, we need to consider if we need V_BREATH or if that can be an experiment. 
 
 ## 9. Provenance and review notes
 
 This is documentation of the uploaded **failed experimental snapshot**, not a verified model specification. Equations quoted above are literal code expressions; physiological interpretations are provisional. Add a `Last reviewed` date and reviewer notes as definitions are confirmed. Preserve the original code and the unsuccessful ZIP for traceability.
+**AF comment (2026-10-15):**I can upload this code again if that helps?

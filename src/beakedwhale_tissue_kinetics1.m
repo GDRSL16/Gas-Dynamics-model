@@ -4,7 +4,7 @@ format long e
 global SURFACE_VALUE
 global N N2_ARRAY O2_ARRAY CO2_ARRAY P_AMB  P_H2O  ART_VEN_PN2 SHUNT_FLAG DECO_FLAG %global variables initialized here
 global  SUMMARY_ARRAY ART_VEN_nN2 ATA DEBUG LUNG_VOL ART_VEN_PO2 ART_VEN_PCO2 OP%temporary array to hold the arterial and venous values.
-global SONAR_FLAG QTOTARRAY STORES O2_DEPLETED_FLAG
+global SONAR_FLAG QTOTARRAY STORES O2_DEPLETED_FLAG BREATH_FLAG
 %%%%%%%%%%%%%%%Creating headers for files
 persistent prefixes headers
 if isempty(prefixes)
@@ -48,8 +48,27 @@ SHUNT_FLAG=0;%this holds the number for the row when the lung N2 has run out
 
 size(s)
 N=length(s); %number data points
+
+%%%%%%%%%%%%%DUMM CALL TO GET BREATHS
+% ===== BREATH EVENTS =====
+global BREATH_FLAG
+
+BREATH_FLAG = zeros(size(N,1));
+
+breath_rows = [ ...
+    90, ...
+    1688, 1700, 1768, ...
+    3295, 3330, 3390, 3440, 3480, ...
+    8750, 8780, 8810, 8825, 8842, ...
+    10378, 10400, 10430, 10450, 10480, ...
+    11740, 11760, 11790, 11810, 11835, 13190, 13210];
+
+BREATH_FLAG(breath_rows) = 1;
+%%%%%%%%%%%%%%%END DUMMY CALL FOR BREATHS
+
+
 LUNG_VOL=[];
-LUNG_VOL(N,5)=-9;%t LUNG_VOL(:,1)=alveolar volume, LUNG_VOL(:,2)=tracehal volume, LUNG_VOL(:,3)=Pinternal,, LUNG_VOL(:,4)=Pambinet
+LUNG_VOL(N,5)=-9;%t LUNG_VOL(:,1)=alveolar volume, LUNG_VOL(:,2)=tracehal volume, LUNG_VOL(:,3)=Pinternal,, LUNG_VOL(:,4)=Pambinet, LUNG_VOL(:,5)=Shunt
 DECO_FLAG=0;
 SONAR_FLAG=[];
 SONAR_FLAG(:,1)=s(:,5);%a 2nd column that indicates time when sonar is on, 1=sonar off, 0=sonar on
@@ -138,7 +157,7 @@ y=1;
 %timearrayend = clock
 
 odba=GET_DIVE_ODBA(new_i);%extract odba data to save with output data
-dADL=GET_DIVE_DYNAMIC_ADL(dsum);%new function Aug 9, 2022 that pulls out the dyanmic aerobic dive limit, i.e. the cADL for each dive, new_i us used to get start and end of each dive
+%dADL=GET_DIVE_DYNAMIC_ADL(dsum);%new function Aug 9, 2022 that pulls out the dyanmic aerobic dive limit, i.e. the cADL for each dive, new_i us used to get start and end of each dive
 %save dsum dsum -ascii -tabs
 %save SUMMARY_ARRAY SUMMARY_ARRAY -ascii -tabs
 O2_CO2_N2_PP=GET_O2_CO2_N2_PP(dsum, SUMMARY_ARRAY);%New function Aug 2024, pulls out last 5 values before surface of PO2, PCO2 and PN2
@@ -157,7 +176,7 @@ outFolder = fullfile(pwd, 'model_outputs');
 if ~exist(outFolder, 'dir'), mkdir(outFolder); end
 
 saveTabWithHeader(fullfile(outFolder, [base '-summary-array.txt']), SUMMARY_ARRAY, headers.summary);
-saveTabWithHeader(fullfile(outFolder, [base '-dADL.txt']),          dADL,          headers.dADL);
+%saveTabWithHeader(fullfile(outFolder, [base '-dADL.txt']),          dADL,          headers.dADL);
 saveTabWithHeader(fullfile(outFolder, [base '-O2_CO2_N2_PP.txt']),  O2_CO2_N2_PP,  headers.O2_CO2_N2_PP);
 
 if ~isempty(QTOTARRAY)

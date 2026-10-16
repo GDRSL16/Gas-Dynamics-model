@@ -49,15 +49,11 @@ if VLmin(2)<=PAMB %VLmin(2) is the pressure where lung collapse
 
 elseif FLAGGA==0%The case when Pamb >=Pint, i.e. no tracheal collapse, the case when structural pressure <0
     if P_AMB(i)==P_AMB(i-1)%same ambient pressure as before
-        %if i>200000
-        %    disp('first')
-        %end
+        
        VL=fzero(@(x)(-(A3-(log((A2./((x./VLmax)-A1))-1)./A4))+Pint_init*(VLinit+VTinit)./(x+VTinit)-PAMB),VLprev);%changed range from [000000001, VLinit0] 
     elseif P_AMB(i)>P_AMB(i-1)%descent
         
-       %if i>200000
-        %    disp('second')
-       % end
+       
        VL=fzero(@(x)(-(A3-(log((A2./((x./VLmax)-A1))-1)./A4))+Pint_init*(VLinit+VTinit)./(x+VTinit)-PAMB),VLprev*0.9);%changed range from [000000001, VLinit0] 
     elseif P_AMB(i)<P_AMB(i-1) %ascent do VLprev*1.1
        vlprevdummy=VLprev*1.1;%a dummy variable to check that VLprev*1.1 is not much larger than VLinit as then fzero will crash
@@ -67,19 +63,8 @@ elseif FLAGGA==0%The case when Pamb >=Pint, i.e. no tracheal collapse, the case 
         if i > 2
             vlprevdummy=vlprevdummy*0.95;
         end
-       % if i>571035%571060
-       %     i
-       %     PAMB
-       %     VLmax
-       %     VTinit
-       %     Pint_init
-       %     VLinit
-       %     VTinit
-       %     vlprevdummy
-       % end
-       if i>1671000
-            disp('third')
-        end
+       
+       
         VL=fzero(@(x)(-(A3-(log((A2./((x./VLmax)-A1))-1)./A4))+Pint_init*(VLinit+VTinit)./(x+VTinit)-PAMB),vlprevdummy);%changed range from [000000001, VLinit0] 
     else
         

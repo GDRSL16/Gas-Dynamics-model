@@ -12,7 +12,7 @@ global N   CO2_ARRAY P_AMB  BLOOD_PARTITIONS_ART BLOOD_PARTITIONS_VEN ART_VEN_PN
 global TEMP_ARRAY  ART_VEN_nN2 GAS_CONSTANT  B_VOL_PACKAGE_VEN SN2_BLOOD P_AMB ADJ_BLOOD_VOL_LUNG_N2
 global ART_VEN_nO2 ART_VEN_PO2 ART_VEN_PO2 ART_VEN_PCO2 DEBUG SONAR_FLAG  ART_VEN_nCO2 
 global n_O2_LUNG n_CO2_LUNG n_N2_LUNG V_LUNG VLinit ART_VEN_O2_STORE
-global VTinit VLinit0 VO2_TOT VO2_MUSCLE Q_TOT STORES ART_VEN_CO2_STORE
+global VTinit VLinit0 VO2_TOT VO2_MUSCLE Q_TOT STORES ART_VEN_CO2_STORE 
 %temporary array to hold the arterial and venous values.  
 rt=GAS_CONSTANT;
 ADJ_BLOOD_VOL_LUNG_N2=B_VOL_PACKAGE_VEN*SN2_BLOOD;
@@ -26,7 +26,9 @@ RMR=VO2_TOT;%RMR is MR for the entire animal and this cannot be used to get the 
 RMMR=VO2_MUSCLE;%RMMR is Restimg Muscle Metabolic Rate and this should be used to create the multiplier VO2_MUSCLE is from Get_variables
 adjust_muscle=1;
 pect=37;
-for i=2:N %for each data point
+max_iterations=13200;
+for i=2:max_iterations
+%for i=2:N %for each data point
     Pamb=P_AMB(i-1:i); %ambient pressure at time t-1 and t
  
     

@@ -13,6 +13,7 @@ function dADL=GET_DIVE_DYNAMIC_ADL(dsum)
 global R P_AMB O2_ARRAY ART_VEN_O2_STORE METABOLIC_RATES
 %METABOLIC_RATES are computed in update_tissue_metabolic_rates
 num_dives= size(dsum,1)-1;%number of dives in record
+
 %no_dive=1;%dive counter which is used to get row of dADL
 for x=1:size(dsum,1)%9464%76702%change
     no_dive=x;

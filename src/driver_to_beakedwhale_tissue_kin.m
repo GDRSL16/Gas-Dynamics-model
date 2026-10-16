@@ -10,7 +10,7 @@ for i=12:12
         WHALE=i;%to be used in get_gas_flux to do differences in responses between whales
      clear ALL
    
-        s=GET_DIVE_DATA_LOAD_TISSUE_KIN(i); %loads the data file consisting of 4 columns, 1:time sec in atm, 2:depth m, 3=odba (g), 4-odba converted to cost of locomotion (COL, watts)
+     s=GET_DIVE_DATA_LOAD_TISSUE_KIN(i); %loads the data file consisting of 4 columns, 1:time sec in atm, 2:depth m, 3=odba (g), 4-odba converted to cost of locomotion (COL, watts)
      dsum=GET_DIVE_SUMMARY_DATA_METABOLIC_RATES(i);%13 columns 1=SI number, 2=SI duration, 3=row for start of SI, 4=row for end SI, 5=average MR (L O2 min-1) during SI, 6=Dive
 
      %number, 7=Dive duration, 8=row for start of dive, 9=row for end dive,
@@ -29,4 +29,5 @@ for i=12:12
 end
 %use 'load -mat filename'   to open where file name is the name pasted in
 %without the extension
+
 return
