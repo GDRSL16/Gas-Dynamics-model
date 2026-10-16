@@ -47,3 +47,4 @@ Explicit detected calls: `blood_O2_sat`, `blood_Pco2`, `blood_lung_Pco2`
 - Identify every surface-condition reset in `update_lung_gas.m` and `est_va.m`.
 - Trace `VLinit`, `VLinit0`, `VLprev`, and `Pint` through the breath event and subsequent iteration.
 - Compare the current uncommitted source against the last working Git commit before changing code.
+**AF comment (2026-10-15):**The units, if different from atm, should only be equation specific. The other confirmations seem reasonable.
