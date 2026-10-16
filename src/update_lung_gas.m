@@ -6,6 +6,8 @@ function [n_N2_art_t,P_N2_art_t,n_O2_art_t,P_O2_art_t, n_CO2_art_t,P_CO2_art_t]=
 global  TEMP_ARRAY N2_ARRAY BLOOD_PARTITIONS_ART BLOOD_PARTITIONS_VEN B_VOL_PACKAGE_VEN SN2_BLOOD SO2_BLOOD SCO2_BLOOD
 global O2_ARRAY CO2_ARRAY SURFACE_VALUE  R  ALV_SURFACE_VALUE P_AMB 
 global Pint Pint_init  VLinit VLinit0 ART_BLOOD_ARRAY VLprev0 VLprev LUNG_VOL FLAGGA
+global V_LUNG V_BREATH BREATH_FRACTION
+global BREATH_FLAG VTinit VLmax F_INSPIRED_N2 F_INSPIRED_CO2 F_INSPIRED_O2%Added October 13 2026 to keep track of breaths
 %Pamb is the pressure at time t and t-1
 
 rt=R*(273+pect);%assuming that blood temp is equal to pectoral muscle 
@@ -29,7 +31,7 @@ art_N2=BLOOD_PARTITIONS_ART;%this is the last arterial blood package which excha
     %end   
     %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-P_N2_ven_tmin1=TEMP_ARRAY((art_N2+ven_N2),1,1);%partial pressure of N2 
+P_N2_ven_tmin1=TEMP_ARRAY((art_N2+ven_N2),1,1);%venous partial pressure of N2 
 n_N2_ven_tmin1=TEMP_ARRAY((art_N2+ven_N2),2,1); %the number of moles in the venuous blood at the start of the routine
 P_N2_lung_tmin1=N2_ARRAY(i-1,5,1);%the partial pressure based of N2 in the lung at t-1.
 n_N2_lung_tmin1=N2_ARRAY(i-1,5,2);%the number of moles N2 in the lung at time t-1
@@ -44,24 +46,71 @@ n_CO2_ven_tmin1=TEMP_ARRAY((art_N2+ven_N2),2,3); %the number of moles in the ven
 P_CO2_lung_tmin1=CO2_ARRAY(i-1,5,1);%the partial pressure based of N2 in the lung at t-1.
 n_CO2_lung_tmin1=CO2_ARRAY(i-1,5,2);%the number of moles N2 in the lung at time t-1
 
-if Pamb(1)==SURFACE_VALUE && Pamb(2)==SURFACE_VALUE %case A in note book p. 25 at surface
+%if Pamb(1)==SURFACE_VALUE && Pamb(2)==SURFACE_VALUE %case A in note book p. 25 at surface, SURFACE_VALUE=Pamb at surface, defined in beakedwhale_tissue_kinetics1
+if BREATH_FLAG(i)==1 
+    V_old_total = LUNG_VOL(i-1,1) + LUNG_VOL(i-1,2);
+
+    if V_old_total < VTinit
+        error('Previous lung volume is below the surface residual volume.');
+    end
+
+    % Residual gas retained after exhalation
+    V_residual = VTinit;
+
+    % Inspired volume, 
+    V_inspired = V_BREATH;
+
+    if V_residual + V_inspired > VLmax
+        error('Breath volume exceeds total lung capacity.');
+    end
+    % Final lung volume after inhalation
+    V_final = V_residual + V_inspired;
+
+    % Gas remaining after exhalation
+    n_old = [ ...
+        N2_ARRAY(i-1,5,2), ...
+        O2_ARRAY(i-1,5,2), ...
+        CO2_ARRAY(i-1,5,2)];
+
+    n_residual = n_old .* (V_residual/V_old_total);
+
+    % Inspired gas entering the lung
+    n_inspired = [ ...
+        F_INSPIRED_N2, ...
+        F_INSPIRED_O2, ...
+        F_INSPIRED_CO2] .* SURFACE_VALUE .* V_inspired ./ rt;
+
+    % New finite lung gas
+    n_new = n_residual + n_inspired;
+
+    % New partial pressures
+    P_lung = n_new .* rt ./ V_final;
+
+    P_N2_lung_t = P_lung(1);
+    n_N2_lung_t = n_new(1);
+
+    P_O2_lung_t = P_lung(2);
+    n_O2_lung_t = n_new(2);
+
+    P_CO2_lung_t = P_lung(3);
+    n_CO2_lung_t = n_new(3);
+
+    % Temporary perfect-equilibrium arterial calculation
+    P_N2_art_t = P_N2_lung_t;
+    n_N2_art_t = ...
+        B_VOL_PACKAGE_VEN * SN2_BLOOD * P_N2_art_t / rt;
+
+    P_O2_art_t = P_O2_lung_t;
+    n_O2_art_t = ...
+        B_VOL_PACKAGE_VEN * ...
+        blood_Co2(P_CO2_lung_t,P_O2_lung_t) / rt;
+
+    P_CO2_art_t = P_CO2_lung_t;
+    n_CO2_art_t = ...
+        B_VOL_PACKAGE_VEN * ...
+        blood_Cco2(P_O2_lung_t,P_CO2_lung_t) / rt;
+
   
-   [P_N2_lung_t,n_N2_lung_t,P_N2_art_t,n_N2_art_t]=update_N2_case_A_or_C(B_VOL_PACKAGE_VEN, SN2_BLOOD,rt);
-   [P_O2_lung_t,n_O2_lung_t,P_O2_art_t,n_O2_art_t]=update_O2_case_A_or_C(B_VOL_PACKAGE_VEN, SO2_BLOOD,rt);
-   [P_CO2_lung_t,n_CO2_lung_t,P_CO2_art_t,n_CO2_art_t]=update_CO2_case_A_or_C(B_VOL_PACKAGE_VEN, SCO2_BLOOD,rt);
-   VLinit=VLinit0;%resetting the initial lung volume so it will be constant with each dive, this is then modified in iteration lung search as N2 is removed and the lung volume adjusted 
-   VLprev=VLprev0;
-   Pint=Pint_init ; 
-   FLAGGA=0;
-elseif  Pamb(1)>SURFACE_VALUE && Pamb(2)==SURFACE_VALUE%case C in note book p. 25 last data point=dive this surface so return to surface
-   
-   [P_N2_lung_t,n_N2_lung_t,P_N2_art_t,n_N2_art_t]=update_N2_case_A_or_C(B_VOL_PACKAGE_VEN, SN2_BLOOD,rt);
-   [P_O2_lung_t,n_O2_lung_t,P_O2_art_t,n_O2_art_t]=update_O2_case_A_or_C(B_VOL_PACKAGE_VEN, SO2_BLOOD,rt);
-   [P_CO2_lung_t,n_CO2_lung_t,P_CO2_art_t,n_CO2_art_t]=update_CO2_case_A_or_C(B_VOL_PACKAGE_VEN, SCO2_BLOOD,rt);
-   VLinit=VLinit0;%resetting the initial lung volume so it will be constant with each dive, this is then modified in iteration lungn search as N2 is removed and the lung volume adjusted 
-   VLprev=VLprev0;   
-   Pint=Pint_init;
-   FLAGGA=0; 
 else %case B, D-F in note book p. 25 only when diving
    
    [n_N2_lung_t, P_N2_art_t, n_N2_art_t]=iteration_N2_lung_search(rt,i,P_N2_lung_tmin1, n_N2_lung_tmin1, P_N2_ven_tmin1, n_N2_ven_tmin1,Pamb,shunt);
@@ -77,11 +126,11 @@ else %case B, D-F in note book p. 25 only when diving
       initialvalue=(N2_ARRAY(1,5,2)+O2_ARRAY(1,5,2)+CO2_ARRAY(1,5,2))*rt;%initial value is the value at row 1
       currentvalue=(n_N2_lung_t+n_O2_lung_t+n_CO2_lung_t)*rt;
       VLinit=VLinit0*currentvalue/initialvalue;%The initial dive lung volume is adjusted for next iteration of lung collapse to inc or dec the volume according to the number of moles N2 that is added or removed.
-   elseif P_AMB(i)==P_AMB(1)%at the surface
-       VLinit=VLinit0;
-       VLprev=VLprev0;
-      Pint=Pint_init;
-      FLAGGA=0;
+   %elseif P_AMB(i)==P_AMB(1)%at the surface
+    %   VLinit=VLinit0;
+    % %  VLprev=VLprev0;
+    %  Pint=Pint_init;
+     % FLAGGA=0;
    end
 end
 
