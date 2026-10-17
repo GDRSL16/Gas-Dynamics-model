@@ -1,3 +1,10 @@
+% GAS DYNAMICS MODEL - INITIAL PARAMETERS AND GAS STORES
+% This function initializes global model parameters and compartment states.
+% IMPORTANT: Calculations are intentionally retained in their original order.
+% Sections group parameter types without altering numerical equations.
+% Units are noted where established; legacy assumptions remain unchanged.
+% Ventilation fractions are added ONLY in the separate flexible version.
+
 
 %need to check if vo2 for each tissue is somewhat similar to blood flow at the surface
 %check blood arrays and PO2, PCO2, , Co2 and Cco2
@@ -20,16 +27,29 @@ global Q_MUSCLE_INIT Q_BRAIN_INIT BLOOD_PARTITIONS_ART_INIT BLOOD_PARTITIONS_VEN
 global nO2DOT_HEART nO2DOT_MUSCLE nO2DOT_BRAIN nO2DOT_FAT nCO2DOT_HEART nCO2DOT_MUSCLE nCO2DOT_BRAIN nCO2DOT_FAT PN2_ven_init PO2_ven_init PCO2_ven_init P_H2O T_TIS
 global ALV_SURFACE_VALUE ART_VEN_PO2 ART_VEN_PCO2 ART_VEN_O2_STORE V_LUNG
 global  Q_AVSHUNT  Q_AVSHUNT_INIT LUNG_VOL AL_A0 AL_A1 AL_B0 AL_B1 DUMMY ACTUAL_MUSCLE_VOLUME
+global EXHALED_FRACTION INHALED_FRACTION
 global nCO2DOT_HEART_ORIGINAL nCO2DOT_MUSCLE_ORIGINAL nCO2DOT_BRAIN_ORIGINAL nCO2DOT_FAT_ORIGINAL
 global nO2DOT_HEART_ORIGINAL nO2DOT_MUSCLE_ORIGINAL nO2DOT_BRAIN_ORIGINAL nO2DOT_FAT_ORIGINAL QTOTARRAY
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%START Initilization of GLOBAL VARIABLES%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+%% MODEL TIME STEP, TEMPERATURE AND GAS CONSTANTS
+% FINITE VENTILATION: parameters used only when BREATH_FLAG(i)==1.
+% EXHALED_FRACTION: fraction of V_old - VTinit removed (0=none; 1=to VTinit).
+% INHALED_FRACTION: fraction of available capacity refilled at ambient dry
+% pressure (0=none; 1=to VLmax). Values can later vary per breath.
+% Defaults reproduce the current full-exhalation/full-inspiration experiment.
+EXHALED_FRACTION=1.0;
+INHALED_FRACTION=1.0;
+
 deltaT=1;%the time step of the data and to be used in calculations in sec
 %%%%%%%%%%%%%%%%%%%Fractional concentrations of air%%%%%%%%%%%%%%%%%
 %%%%%%%%%%%%%%%%%%%%Physcial variables %%%%%%%%%%%%%%
 T_TIS=37+273; %body temperature in K
 STPD_TO_BT=(T_TIS/273);%CONVERSION FROM STPD to body temperature, used in Cco2 and Co2 functions to get volume at body temperature as Al's functions give them at STPD
 R= 0.08206;%atm x l/(mol x K) 
+
+%% GAS SOLUBILITIES AND TEMPERATURE COEFFICIENTS
 SN2_BLOOD=0.0144; %tissue/gas partition coefficient, ml gas @37C/ml liquid,In Weahtersby et al. Undersea Biomed Res 1980, plasma, water and blood are the same 
 SO2_BLOOD=0.0261;%In Weahtersby et al. Undersea Biomed Res 1980, plasma, water and blood are the same
 SCO2_BLOOD=0.63;%For water, In Weahtersby et al. Undersea Biomed Res 1980
@@ -43,6 +63,8 @@ T_S_N2_BLOOD=-0.8/100;
 T_S_O2_FAT=-0.2/100;
 T_S_CO2_FAT=-1.1/100; 
 T_S_N2_FAT=-0.4/100;
+
+%% INSPIRED AIR AND INITIAL ALVEOLAR / VENOUS GAS TENSIONS
 FN2=0.79;%assuming fractional concentration of air with 21% O2, 0.05% CO2 and 79% N2, 
 FCO2=0.005;
 FO2=0.21-FCO2;
@@ -66,6 +88,8 @@ PO2_ven_init=55.9/760;%from stephenson 2005 jeb, table 2
 PCO2_ven_init=48.9/760;% from stephenson jeb 2005, table 2 
 
 %%%%%%%%%%%%%%body and organ masses and volumes%%%%%%%%%%%%%
+
+%% BODY MASS, TISSUE MASSES AND COMPARTMENT VOLUMES
 M_B=op%send the animal specific body mass to function 200;%animals body mass, from andrews-jeb-200-2083-2095-1997, Seal: GJ325, Mb=177kg, Mb=104kg Kooyman et al, 1972 AmJP paper
 V_LUNG=25*M_B/1000%25 ml/kg from Zimmer et al., 2007, Miller et al., 2016
 %V_LUNG= 0.135*M_B^0.92;%Max volume defined as 50.4 ml/kg for elephant seal in Kooyman et al. AmJP 1972 assumed to be close to max insp volume, 20.4 ml/kg was seen during chamber dives 
@@ -102,6 +126,8 @@ VTIS= V_MUSCLE+V_HEART+V_FAT+V_BRAIN;%Total tissue volume
 %VO2_BRAIN=(22.1*scaling*M_BRAIN)/1000
 %VO2_FAT= (0.5*scaling*M_FAT)/1000%fat+bone, mass specific VO2 estimated from assuming an allometric relationship that each organ scales by Mb^0.75 with human and weddell seal VO2penguin-organ=VO2seal-organ*(Mbpenguin^-0.25/Mbseal^-0.25), Davis and Kanatous JEB 1999 
 %VO2_TOT=VO2_FAT+VO2_MUSCLE+VO2_BRAIN+VO2_HEART% l O2 min-1
+
+%% METABOLIC RATE PARAMETERS AND TISSUE O2 CONSUMPTION
 muscle_fiber_scaling=0.5; %change in muscle metabolism as glycolytic fibers are larger with less mitochondria, estimtes from Velten et al. 2013
 neuronal_density_scaling=0.5;%Ridgway et al., 2019 lower neuronal density in beaked whales so assume brain 50% lower metabolic rate, also brain only 0.1% of Mb but will keep 0.2% as spinal cord then also included
 scaling=(M_B^-0.25/450^-0.25);
@@ -115,6 +141,8 @@ VO2_TOT=VO2_FAT+VO2_MUSCLE+VO2_BRAIN+VO2_HEART;% l O2 min-1
 %VO2_TOT/op*1000%checks mass specific and DQ animals are 1.9-4.1ml/kg from
 %Austin
 %%%%%%%%%%%%%%VCO2s%%%%%%%%%%%%%%%%
+
+%% CO2 PRODUCTION AND RESPIRATORY QUOTIENT
 RQ=1;%0.7; %The respiratory quotient, assumed a constant
 VCO2_HEART=VO2_HEART*RQ;
 VCO2_MUSCLE=VO2_MUSCLE*RQ;
@@ -122,6 +150,8 @@ VCO2_BRAIN=VO2_BRAIN*RQ;
 VCO2_FAT=VO2_FAT*RQ;
 VCO2_TOT=VCO2_FAT+VCO2_MUSCLE+VCO2_BRAIN+VCO2_HEART;% ml CO2 min-1
 %%%%%%%%%%%converting metabolic rate to moles O2 consumed per min
+
+%% O2 CONSUMPTION IN MOLES AND BASELINE COPIES
 nO2DOT_HEART=(1*(VO2_HEART))./(R*273);%metabolic rate in moles per min per tissue, ambient pressure is 1 ATA, and temperature 273 K
 nO2DOT_MUSCLE=(1*(VO2_MUSCLE))./(R*273);
 nO2DOT_BRAIN=(1*VO2_BRAIN)./(R*273);
@@ -155,6 +185,8 @@ nCO2DOT_FAT_ORIGINAL=nCO2DOT_FAT;
 %Q_TOT_MULTIPLIER=??;
 %Q_TOT=0.64*(M_B^-0.25/520^-0.25)*M_B/1000*Q_TOT_MULTIPLIER;
 %%%%%%%beluga Fahlman et al., JEB 2020, Mb=160kg CO 1.94 ml kg-1 sec-1
+
+%% CARDIAC OUTPUT AND PERFUSION PARAMETERS
 Q_TOT_MULTIPLIER=5;%original 2026 model
 %Q_TOT_MULTIPLIER=2.5;%Models used in 2026 study 10x and 2.5 x
 Q_TOT=1.94*(M_B^-0.25/160^-0.25)*M_B/1000*Q_TOT_MULTIPLIER%gives 
@@ -162,6 +194,8 @@ QTOTARRAY(1,1)=Q_TOT; %an array that gets updated in GET_GAS_FLUX yo save cardia
 %QTOTARRAY as size the same number of rows as dives and 5 columns 1=total,%2=heart, 3=muscle, 4=brain, 5=fat
 
 %From Lenfant et al AmJP 216 6:1598-1600 1969, Adelie and emperor penguin
+
+%% HEMOGLOBIN / MYOGLOBIN GAS BINDING
 P50_O2=31/760;%reported as 31 by Meir et al. can be done by dividing P50(mmHg)/760, function is saturation=(PO2^BETA_0)/(PO2^BETA_0+P50^BETA_0)
 BETA_0=2.39; %reported in mmHg as 3.0 and 2.9 so 2.95 used here, for Adelie, this is the Hill coefficient and remains the same for mmHg or ATA 
 P50_MB=2.5/760;%2.5 mmHg; valaue between norhtern bottlenose and sperm whale in Helbo and Faro 2015
@@ -187,6 +221,8 @@ MB_O2= 1.34;%ml O2 per gram Mb Assuming that gas volume is STPD Kooyman Divrse d
 O2_CAPACITY_HB=HB_O2*HB; %the Co2 approx 0.23 ml O2 STPD/ml blood, correspond approximately to value in Butler NIPS 2000
 O2_CAPACITY_MB=MB_O2*MB*1.05;%the Co2 conc in muscle approx L O2 STPD/kg muslce tissue *converting from mass to volume
 %%%%%%%%%%%%%%%%%%%%%%%paramters for blood PO2 and PCO2%%%%%%%%%%from Al from Seal blood Ersland and Clausen Resp Physiol 1969
+
+%% BLOOD O2 / CO2 CONTENT PARAMETERS
 AL_A0=1.7585;%converted to ATA and 0.0559 for mmHg
 AL_B0=0.5199;%converted to ATA and 0.0301 for mmHg
 AL_A1=1.8714;%converted to ATA and 0.5199 for mmHg
@@ -196,11 +232,15 @@ BOHR=0.304;%the same for ATA and mmHg
 %%%%%%%%%%%Molar values in each compartment%%%%%%%%%%%%
 
 %%%%%%%%%%%%%%%%%%%%%Central circulation-ONLY DISSOLVED%%%%%%%%%%%%%%%%%%%%%
+
+%% INITIAL CENTRAL-CIRCULATION GAS STORES
 n_N2_HEART=(PN2_ven_init*V_HEART*SN2_BLOOD)./(GAS_CONSTANT);%n= (Pamb x FN2 x V_HEART x SN2_BLOOD)/(R x T)
 n_O2_HEART =(PO2_ven_init*V_HEART*SO2_BLOOD)./GAS_CONSTANT;%Of the total mass of the central circulation compartment heart is very small. There, the assumption is that any O2 tied to myoglobin is negligible
 n_CO2_HEART =(PCO2_ven_init*V_HEART*SCO2_BLOOD)./GAS_CONSTANT;%Tissue tensions needs to be taken from animal studies
 
 %%%%%%%%%%%%%%%%%%%%%Muscle-MYOGLOBIN BOUND O2---STORES%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+%% INITIAL MUSCLE GAS STORES
 n_N2_MUSCLE=(PN2_ven_init*V_MUSCLE*SN2_BLOOD)./(GAS_CONSTANT);%n= (Pamb x FN2 x V_MUSCLE x SN2_BLOOD)/(R x T), dissolved + Mb bound
 %muscle_S=Muscle_MbO2_sat(PO2_ven_init);%assumes that this returns saturation at 37C
 
@@ -209,16 +249,22 @@ n_O2_MUSCLE=muscle_Co2(PO2_ven_init)*ACTUAL_MUSCLE_VOLUME./(GAS_CONSTANT);%disso
 n_CO2_MUSCLE=(PCO2_ven_init*V_MUSCLE*SCO2_BLOOD)./(GAS_CONSTANT);%difficult to know what this value is 
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%Brain%%%%%%%%%%%%%%%%%%%%%%%%
+
+%% INITIAL BRAIN GAS STORES
 n_N2_BRAIN=(PN2_ven_init*V_BRAIN*SN2_FAT)/(GAS_CONSTANT);%n= (Pamb x FN2 x V_BRAIN x SN2_FAT)/(R x T) 
 n_O2_BRAIN= (PO2_ven_init*V_BRAIN*SO2_FAT)/(GAS_CONSTANT); 
 n_CO2_BRAIN=(PCO2_ven_init*V_BRAIN*SCO2_BRAIN)/(GAS_CONSTANT);
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%FAT%%%%%%%%%%%%%%%%%%%%%%%%%
 disp('line 217 in GET_VARIABLES_ZIP_NEW has x 2 initial fat N2 saturation to reduce time to equilibrium')
+
+%% INITIAL FAT GAS STORES
 n_N2_FAT=(PN2_ven_init*V_FAT*SN2_FAT)/(GAS_CONSTANT)*2;%Feb 16-2026 initialize to 2 times %n= (Pamb x FN2 x V_FAT x (1/2*SN2_FAT+1/2*SN2_BLOOD))/(R x T), the fat tissue is assumed to have a solubility equal to 4/5 fat and the rest as blood
 n_O2_FAT=(PO2_ven_init*V_FAT*SO2_FAT)/(GAS_CONSTANT); 
 n_CO2_FAT=(PCO2_ven_init*V_FAT*SCO2_FAT)/(GAS_CONSTANT);
 %%%%%%%%%%%%%%%%%%%%%%%%%Lung-Gas phase%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %
+
+%% INITIAL LUNG GAS STORES
 n_N2_LUNG=(PN2_alv_init*V_LUNG)/GAS_CONSTANT;%Determined from end-tidal PO2 (max 120 mmHg), PCO2's (min 30 mmHg) reported in Stephenson JEB 2005, 
 n_O2_LUNG=(PO2_alv_init*V_LUNG)/GAS_CONSTANT;%The assumption is that ambient surface pressure (1 ATA)
 n_CO2_LUNG=(PCO2_alv_init*V_LUNG)/GAS_CONSTANT;
@@ -226,6 +272,8 @@ n_CO2_LUNG=(PCO2_alv_init*V_LUNG)/GAS_CONSTANT;
 %%%%%%%%%%%%%%%%%%%%%%Lung-tissue pase%%%%%%%%%%%%%%
 
 %%%%%%%%%%%%%%%Time variables%%%%%%%%%%%%%
+
+%% BLOOD TRANSIT TIMES AND PACKAGE SIZES
 TRANSIT_ART=(V_BLOOD_ART/Q_TOT);%transit time (s) of arterial blood equal to arterial blood volume/Q_tot 
 TRANSIT_VEN=(V_BLOOD_VEN/Q_TOT);%transit time (s) of venous blood equal to venous blood volume/Q_tot
 %The "round" below makes sure that the packages below always become whole numbers
@@ -240,6 +288,8 @@ B_VOL_PACKAGE_VEN=B_VOL_PACKAGE_ART;%forcing blood volumes in each package to be
 disp('MAKE SURE THAT CO IS ADJUSTED AS 95 ML/SEC IS REST, DISPLAY IN GET_VARIABLE_DOLPHIN ROW 209')
 Q_TOT=(B_VOL_PACKAGE_VEN)/deltaT;%total blood flow gets modified to fit the assumption of a certain number of packages, l/s,
 
+
+%% TISSUE BLOOD FLOW ALLOCATION
 Q_HEART=0.25*Q_TOT; %31%fraction of blood flow to heart+kidney+liver, relative to VO2 to each organ, flow from heart kidney and splanchnic
 Q_FAT=0.03*Q_TOT;% < 1% to adipose tissueQ_TOT;
 Q_MUSCLE=0.65*Q_TOT;%Q_TOT 67% 18% to muscle and the rest fat skin and bone, alimentary etc
@@ -264,6 +314,8 @@ QTOTARRAY(1,5)=Q_FAT_INIT;
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%Circulation arrays%%%%%%%%%%%%%%%%%%%%%
 %%ART_N2_BLOOD_ARRAY and ART_O2_BLOOD_ARRAY and ART_CO2_BLOOD_ARRAY is a single (r x v x c) array called ART_BLOOD_ARRAY where 
 %%r is the number of rows=BLOOD_PARTITIONS_ART, c=is 3 columns for the 3 gases N2, O2, CO2, and v=are 3 changing variables, Partial pressure, mol of gas c, pH
+
+%% ARTERIAL / VENOUS BLOOD PACKAGE INITIALIZATION
 ART_BLOOD_ARRAY=zeros(BLOOD_PARTITIONS_ART,3,3);
 %%VEN_N2_BLOOD_ARRAY and VEN_O2_BLOOD_ARRAY VEN_CO2_BLOOD_ARRAY is a single (r x v x c) array called VEN_BLOOD_ARRAY where 
 %%r is the number of rows=BLOOD_PARITIONS_VEN, c=is 3 columns for the 3 gases, and v=are 3 changing variables, Partial pressure and mol of gas c, pH
@@ -297,6 +349,8 @@ VEN_BLOOD_ARRAY(:,3,1)=pHv;%the venous pH
 VEN_BLOOD_ARRAY(:,3,2)=pHv;
 VEN_BLOOD_ARRAY(:,3,3)=pHv;
 
+
+%% ARTERIAL AND MIXED VENOUS SUMMARY ARRAYS
 ART_VEN_PN2(1,1)=ART_BLOOD_ARRAY(1,1,1);%These keep the "last" venous and arterial value, the one that gas just exchanged with tissue or lung 
 ART_VEN_PN2(1,2)=VEN_BLOOD_ARRAY(1,1,1);
 ART_VEN_PO2(1,1)=ART_BLOOD_ARRAY(1,1,2);%These keep the "last" venous and arterial value, the one that gas just exchanged with tissue or lung 
@@ -306,6 +360,8 @@ ART_VEN_PCO2(1,2)=VEN_BLOOD_ARRAY(1,1,3);
 TEMP_ARRAY=[ART_BLOOD_ARRAY;VEN_BLOOD_ARRAY];
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%Circulation arrays%%%%%%%%%%%%%%%%%%%%%
 
+
+%% LUNG MECHANICS INITIALIZATION
 GET_VARIABLES_LUNG_COLL_ZIP(n_O2_LUNG,n_CO2_LUNG, n_N2_LUNG);
 tissue_O2_store=(n_O2_HEART+n_O2_MUSCLE+n_O2_BRAIN+n_O2_FAT)*R*273;%L O2 STPD
 lung_O2_store=n_O2_LUNG*R*273; %L O2 STPD;

@@ -1,3 +1,11 @@
+% GAS DYNAMICS MODEL - LUNG GAS UPDATE
+% BREATH_FLAG(i)=1: finite exhalation/inspiration in moles; bypass est_va.
+% Otherwise: preserve existing finite pulmonary gas exchange iteration.
+% Gas order in vectors: [N2 O2 CO2]; pressure in atm; volumes in L.
+% On a breath the surface arterial routines impose instantaneous equilibrium.
+% This approximation is not an explicit diffusion/perfusion calculation.
+% Validation checks confirm algebraic consistency, not whole-model conservation.
+
 %possibly change all gases here as the "shunt" works fine in this version, so update all gases here 
 function [n_N2_art_t,P_N2_art_t,n_O2_art_t,P_O2_art_t, n_CO2_art_t,P_CO2_art_t]=update_lung_gas(Pamb,i,pect)
 %This funtion updates the lung/arterial tissue tensions. It iteratively searches for values during compression/decompression but is just updating
@@ -6,7 +14,7 @@ function [n_N2_art_t,P_N2_art_t,n_O2_art_t,P_O2_art_t, n_CO2_art_t,P_CO2_art_t]=
 global  TEMP_ARRAY N2_ARRAY BLOOD_PARTITIONS_ART BLOOD_PARTITIONS_VEN B_VOL_PACKAGE_VEN SN2_BLOOD SO2_BLOOD SCO2_BLOOD
 global O2_ARRAY CO2_ARRAY SURFACE_VALUE  R  ALV_SURFACE_VALUE P_AMB 
 global Pint Pint_init  VLinit VLinit0 ART_BLOOD_ARRAY VLprev0 VLprev LUNG_VOL FLAGGA
-global BREATH_FLAG VTinit VLmax TAC
+global BREATH_FLAG VTinit VLmax TAC EXHALED_FRACTION INHALED_FRACTION
 %Pamb is the pressure at time t and t-1
 
 rt=R*(273+pect);%assuming that blood temp is equal to pectoral muscle 
@@ -50,25 +58,34 @@ P_CO2_lung_tmin1=CO2_ARRAY(i-1,5,1);%the partial pressure based of N2 in the lun
 n_CO2_lung_tmin1=CO2_ARRAY(i-1,5,2);%the number of moles N2 in the lung at time t-1
 
 if BREATH_FLAG(i)==1
-    % Finite breath at the current dry ambient pressure.
-    % Gas order [N2 O2 CO2]. No tissue exchange during this single event.
+    % Finite breath at current dry ambient pressure. Gas order [N2 O2 CO2].
+    % During this event ventilation is modeled explicitly in moles;
+    % arterial blood is updated by the legacy instantaneous-equilibrium rule.
     V_old=LUNG_VOL(i-1,1)+LUNG_VOL(i-1,2);
-    V_residual=VTinit;
-    V_inspired=TAC;  % Full inspiration in this first test (TLC minus tracheal volume).
-    
-    if V_old < V_residual || V_old <= 0
+    % Exhalation fraction is defined relative to gas volume above VTinit.
+    % Mole fractions are removed uniformly (well-mixed lung assumption).
+    if ~isfinite(EXHALED_FRACTION) || EXHALED_FRACTION < 0 || EXHALED_FRACTION > 1 || ...
+       ~isfinite(INHALED_FRACTION) || INHALED_FRACTION < 0 || INHALED_FRACTION > 1
+        error('Ventilation fractions must be finite and between 0 and 1.');
+    end
+    if V_old < VTinit || V_old <= 0
         error('Breath at step %d: previous lung volume below residual volume',i);
     end
+    V_exhaled=EXHALED_FRACTION*(V_old-VTinit);
+    V_end_exp=V_old-V_exhaled;
     n_old=[n_N2_lung_tmin1,n_O2_lung_tmin1,n_CO2_lung_tmin1];
-    n_remaining=n_old*(V_residual/V_old);
+    n_remaining=n_old*(V_end_exp/V_old);
     F_inspired=[0.79,0.21,0];
-    % Calculate remaining gas volume at surface pressure
+
+    % Convert retained moles to an equivalent volume at ambient dry pressure.
+    % The retained gas may not initially be at the same pressure as ambient.
     V_remaining=sum(n_remaining)*rt/P_AMB(i);
+    if V_remaining > VLmax+1e-8
+        error('Breath at step %d: retained gas alone exceeds TLC',i);
+    end
 
-    % Maximum inspired volume to reach TLC
-    V_inspired=max(0,VLmax-V_remaining);
-
-    % Add inspired gas
+    % INHALED_FRACTION=1 fills available capacity to TLC; 0 adds no gas.
+    V_inspired=INHALED_FRACTION*max(0,VLmax-V_remaining);
     n_inspired=F_inspired*P_AMB(i)*V_inspired/rt;
 
     % Updated lung gas

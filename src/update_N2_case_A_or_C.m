@@ -1,3 +1,8 @@
+% FINITE BREATH / LEGACY SURFACE - N2
+% Optional breath_gas is 3x2: rows N2,O2,CO2; columns pressure(atm), moles.
+% Without it, legacy ALV_SURFACE_VALUE is used.
+% Arterial gas tension is set equal to the lung tension during the breath.
+
 function [P_N2_lung_t,n_N2_lung_t,P_N2_art_t,n_N2_art_t]=update_N2_case_A_or_C(Vblood, sN2_blood,rt,breath_gas);
 global ALV_SURFACE_VALUE
 if nargin < 4

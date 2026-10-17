@@ -1,3 +1,8 @@
+% FINITE BREATH / LEGACY SURFACE - O2
+% Optional breath_gas is 3x2: rows N2,O2,CO2; columns pressure(atm), moles.
+% O2 blood content depends on both lung PO2 and PCO2.
+% Instantaneous arterial equilibration is an explicit model assumption.
+
 function [P_O2_lung_t,n_O2_lung_t,P_O2_art_t,n_O2_art_t]=update_O2_case_A_or_C(Vblood, sO2_blood,rt,breath_gas);
 global O2_ARRAY ALV_SURFACE_VALUE
 if nargin < 4

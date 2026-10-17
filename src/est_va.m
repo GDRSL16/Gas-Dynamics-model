@@ -1,3 +1,8 @@
+% GAS DYNAMICS MODEL - ALVEOLAR VOLUME AND SHUNT
+% Invoked from the no-breath pathway of update_lung_gas.
+% Mechanical collapse is handled by N2_lung_coll when not at exact surface.
+% The legacy exact-surface branch remains unchanged in this cleanup.
+
 function y=est_va(i,rt) %THE SHUNT EQUATION
 %this function estimates alveolar lung volume at at various pressures given
 %certain initial conditions
