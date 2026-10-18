@@ -1,3 +1,16 @@
+% ========================================================================
+% Documentation reviewed: 2026-10-18 | Batch 01
+% Purpose: Collect oxygen and carbon dioxide stores from tissue and blood states.
+% Interface: i is the current model row; output is a vector of store summaries.
+% Review note: The original column mapping is retained; check legacy comments for naming inconsistencies.
+% Scope: Documentation only; all pre-existing lines remain unchanged.
+% ========================================================================
+
+% ============================================================
+% Documentation review: 2026-10-18 | Batch 01
+% Scope: Review tracking header only; original code preserved.
+% Numerical calculations, logic, and existing comments unchanged.
+% ============================================================
 %This function looks for the blood, tissue and lung O2 and CO2 stores throughout the entire data set
 %It pulls out the O2 from the blood array and each compartment. 
 %it then also pulls out the metabolic rate of the upcoming dive

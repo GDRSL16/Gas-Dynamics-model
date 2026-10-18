@@ -1,3 +1,11 @@
+% ========================================================================
+% Documentation reviewed: 2026-10-18 | Batch 02
+% Purpose: Initialize physiological parameters, tissue compartments and ventilation settings.
+% Interface: op is passed from the driver; the function initializes many global variables.
+% Review note: The existing parameter definitions and order of initialization remain authoritative.
+% Scope: Documentation only; all pre-existing lines remain unchanged.
+% ========================================================================
+
 % GAS DYNAMICS MODEL - INITIAL PARAMETERS AND GAS STORES
 % This function initializes global model parameters and compartment states.
 % IMPORTANT: Calculations are intentionally retained in their original order.

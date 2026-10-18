@@ -1,3 +1,11 @@
+% ========================================================================
+% Documentation reviewed: 2026-10-18 | Batch 02
+% Purpose: Load a legacy simulation summary selected by integer index.
+% Interface: i selects the dataset; returns the loaded numeric data.
+% Review note: Contains a historical absolute pathname; retained to avoid altering behavior.
+% Scope: Documentation only; all pre-existing lines remain unchanged.
+% ========================================================================
+
 %This function asks the user for the data array and inputs it into an array, these modified data files 
 function y=LOAD_SIMULATION_DATA(i)
 %disp('Please provide the name of for the summary array of 14 columns of PN2 outcome data.');

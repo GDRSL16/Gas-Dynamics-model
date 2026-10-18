@@ -1,3 +1,16 @@
+% ========================================================================
+% Documentation reviewed: 2026-10-18 | Batch 01
+% Purpose: Extract compartment gas tensions near dive start and end.
+% Interface: dsum supplies dive boundaries; SUMMARY_ARRAY contains the gas-tension output columns.
+% Review note: The original backward-looking averaging window and indices are unchanged.
+% Scope: Documentation only; all pre-existing lines remain unchanged.
+% ========================================================================
+
+% ============================================================
+% Documentation review: 2026-10-18 | Batch 01
+% Scope: Review tracking header only; original code preserved.
+% Numerical calculations, logic, and existing comments unchanged.
+% ============================================================
 %This function pulls out the value of PO2, PCO2 and PN2 at the start of the
 %dive and the mean of the last 3 values before reaching the surface
 function O2_CO2_N2_PP=GET_O2_CO2_N2_PP(dsum, SUMMARY_ARRAY)

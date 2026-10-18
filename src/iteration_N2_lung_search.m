@@ -1,3 +1,11 @@
+% ========================================================================
+% Documentation reviewed: 2026-10-18 | Batch 02
+% Purpose: Calculate pulmonary N2 redistribution between lung and venous blood.
+% Interface: Inputs include prior lung/venous N2, ambient conditions, time index and shunt.
+% Review note: Uses a gas-equivalent blood volume; do not change conservation algebra.
+% Scope: Documentation only; all pre-existing lines remain unchanged.
+% ========================================================================
+
 function  [n_N2_lung_t, P_N2_art_t, n_N2_art_t]=iteration_N2_lung_search(rt,i,P_N2_lung_tmin1, n_N2_lung_tmin1, P_N2_ven_tmin1, n_N2_ven_tmin1, Pamb,shunt);
 %old with estimation of lung PN2 [n_N2_lung_t,P_N2_lung_t, P_N2_art_t, n_N2_art_t]=iteration_N2_lung_search(rt,i,P_N2_lung_tmin1, n_N2_lung_tmin1, P_N2_ven_tmin1, n_N2_ven_tmin1, Pamb,shunt);
 format long e

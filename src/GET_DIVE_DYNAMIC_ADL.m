@@ -1,3 +1,16 @@
+% ========================================================================
+% Documentation reviewed: 2026-10-18 | Batch 01
+% Purpose: Summarize oxygen stores and metabolic variables at dive boundaries.
+% Interface: dsum provides dive start/end rows; results combine tissue, lung and blood O2 stores.
+% Review note: Dive boundary indexing and output-column meanings are documented in legacy comments.
+% Scope: Documentation only; all pre-existing lines remain unchanged.
+% ========================================================================
+
+% ============================================================
+% Documentation review: 2026-10-18 | Batch 01
+% Scope: Review tracking header only; original code preserved.
+% Numerical calculations, logic, and existing comments unchanged.
+% ============================================================
 %This function looks for the blood, tissue and lung O2 store the last
 %second before a dive starts and again the last second before a dive ends.
 %It uses dsum=the data file that has the row number for start and end of

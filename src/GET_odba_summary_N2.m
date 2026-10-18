@@ -1,3 +1,11 @@
+% ========================================================================
+% Documentation reviewed: 2026-10-18 | Batch 02
+% Purpose: Calculate dive-level summaries from depth, ODBA and locomotion inputs.
+% Interface: depth, odba and vo2_odba are input series; summary arrays are global.
+% Review note: Uses dive-boundary information from global DIVE_DURATION.
+% Scope: Documentation only; all pre-existing lines remain unchanged.
+% ========================================================================
+
 %this function estimates the dive duration, maxdepth, max compression and decompression rate, average (+- SD) depth, 
 %max and min heart rate for each dive. It is by necessity long since I want to avoid scrolling through long data sets 
 %several times

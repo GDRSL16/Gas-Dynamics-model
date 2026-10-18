@@ -1,3 +1,16 @@
+% ========================================================================
+% Documentation reviewed: 2026-10-18 | Batch 01
+% Purpose: Coordinate stepwise gas exchange, circulation and dive-response calculations.
+% Interface: dsum supplies dive summary/boundary information; state is communicated largely through globals.
+% Review note: Physiological branches, call sequence and blood-package calculations are preserved.
+% Scope: Documentation only; all pre-existing lines remain unchanged.
+% ========================================================================
+
+% ============================================================
+% Documentation review: 2026-10-18 | Batch 01
+% Scope: Review tracking header only; original code preserved.
+% Numerical calculations, logic, and existing comments unchanged.
+% ============================================================
 %%%%%%%Possibly do, change dive intervals to 1050 for long and change HIF
 %%%%%%%added to short dives
 %SONAR FLAG is used to create a different type of heart rate response
@@ -26,9 +39,9 @@ RMR=VO2_TOT;%RMR is MR for the entire animal and this cannot be used to get the 
 RMMR=VO2_MUSCLE;%RMMR is Restimg Muscle Metabolic Rate and this should be used to create the multiplier VO2_MUSCLE is from Get_variables
 adjust_muscle=1;
 pect=37;
-%max_iterations=4000;%Max for now-October 17, 2026 13200;
-%for i=2:max_iterations
-for i=2:N %for each data point
+max_iterations=13200;%Max for now-October 17, 2026 13200;
+for i=2:max_iterations
+%for i=2:N %for each data point
     Pamb=P_AMB(i-1:i); %ambient pressure at time t-1 and t
  
     

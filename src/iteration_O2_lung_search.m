@@ -1,3 +1,11 @@
+% ========================================================================
+% Documentation reviewed: 2026-10-18 | Batch 02
+% Purpose: Calculate pulmonary O2 transfer and arterial O2 state for one step.
+% Interface: Inputs include prior lung/venous O2, ambient conditions, time index and shunt.
+% Review note: May support reverse O2 exchange; keep transfer signs and shunt behavior intact.
+% Scope: Documentation only; all pre-existing lines remain unchanged.
+% ========================================================================
+
 function [n_O2_lung_t, P_O2_art_t, n_O2_art_t]=iteration_O2_lung_search(rt,i,P_O2_lung_tmin1, n_O2_lung_tmin1, P_O2_ven_tmin1, n_O2_ven_tmin1,Pamb,shunt);
 format long e
 global B_VOL_PACKAGE_VEN SO2_BLOOD O2_ARRAY VLinit0 VLinit BLOOD_PARTITIONS_VEN BLOOD_PARTITIONS_ART TEMP_ARRAY

@@ -1,3 +1,16 @@
+% ========================================================================
+% Documentation reviewed: 2026-10-18 | Batch 01
+% Purpose: Legacy selector for ODBA and associated dive time-series data.
+% Interface: i selects a recording; returns the selected numeric input array.
+% Review note: Contains a machine-specific pathname and legacy file mappings; not changed here.
+% Scope: Documentation only; all pre-existing lines remain unchanged.
+% ========================================================================
+
+% ============================================================
+% Documentation review: 2026-10-18 | Batch 01
+% Scope: Review tracking header only; original code preserved.
+% Numerical calculations, logic, and existing comments unchanged.
+% ============================================================
 %This function asks the user for the data array and inputs it into an array, these modified data files 
 function y=GET_DIVE_ODBA(i);
 %disp('Please provide the name of for the array of outcome data.');

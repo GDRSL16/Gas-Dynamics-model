@@ -1,3 +1,11 @@
+% ========================================================================
+% Documentation reviewed: 2026-10-18 | Batch 02
+% Purpose: Initialize gas-state arrays and starting tissue/lung values.
+% Interface: No arguments; uses globally configured array dimensions and initial gas stores.
+% Review note: The -9 sentinel values are intentional diagnostics for uninitialized entries.
+% Scope: Documentation only; all pre-existing lines remain unchanged.
+% ========================================================================
+
 %This gives starting values for the arrays
 function init_array()
 global V_MUSCLE V_HEART V_FAT V_BRAIN 

@@ -1,3 +1,11 @@
+% ========================================================================
+% Documentation reviewed: 2026-10-18 | Batch 02
+% Purpose: Calculate pulmonary CO2 transfer and arterial CO2 state for one step.
+% Interface: Inputs include prior lung/venous CO2, ambient conditions, time index and shunt.
+% Review note: A full shunt bypasses pulmonary exchange; existing blood chemistry is preserved.
+% Scope: Documentation only; all pre-existing lines remain unchanged.
+% ========================================================================
+
 function [n_CO2_lung_t, P_CO2_art_t, n_CO2_art_t]=iteration_CO2_lung_search(rt,i,P_CO2_lung_tmin1, n_CO2_lung_tmin1, P_CO2_ven_tmin1, n_CO2_ven_tmin1,Pamb,shunt);
 format long e
 global B_VOL_PACKAGE_VEN SCO2_BLOOD P_AMB CO2_ARRAY VLinit0 VLinit BLOOD_PARTITIONS_VEN BLOOD_PARTITIONS_ART TEMP_ARRAY

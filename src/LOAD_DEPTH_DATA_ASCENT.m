@@ -1,3 +1,11 @@
+% ========================================================================
+% Documentation reviewed: 2026-10-18 | Batch 02
+% Purpose: Interactively load depth-related data used for ascent analysis.
+% Interface: No arguments; returns the selected file as a numeric array.
+% Review note: The original file filter and loader behavior are retained.
+% Scope: Documentation only; all pre-existing lines remain unchanged.
+% ========================================================================
+
 function y=LOAD_DEPTH_DATA_ASCENT
 disp('Please provide the name of the array of dive depth data.');
 [filename,pathname]=uigetfile('*.*','Depth Data File Name');%gives the name of file and path

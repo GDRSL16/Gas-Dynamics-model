@@ -1,3 +1,16 @@
+% ========================================================================
+% Documentation reviewed: 2026-10-18 | Batch 01
+% Purpose: Load per-dive and surface-interval summary information.
+% Interface: whale_id selects a summary file; column descriptions follow in the original header.
+% Review note: Summary start/end rows must be consistent with the time-series input.
+% Scope: Documentation only; all pre-existing lines remain unchanged.
+% ========================================================================
+
+% ============================================================
+% Documentation review: 2026-10-18 | Batch 01
+% Scope: Review tracking header only; original code preserved.
+% Numerical calculations, logic, and existing comments unchanged.
+% ============================================================
 function data = GET_DIVE_SUMMARY_DATA_METABOLIC_RATES(whale_id)
 % GET_DIVE_SUMMARY_DATA_METABOLIC_RATES_MAC - Load summary metabolic rate data for a specific whale.
 %

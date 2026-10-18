@@ -1,3 +1,11 @@
+% ========================================================================
+% Documentation reviewed: 2026-10-18 | Batch 02
+% Purpose: Initialize lung-compression parameters and initial lung-volume state.
+% Interface: Inputs are initial O2, CO2 and N2 lung moles; results are global variables.
+% Review note: Initial values and pressure/volume relationships are not altered.
+% Scope: Documentation only; all pre-existing lines remain unchanged.
+% ========================================================================
+
 function GET_VARIABLES_LUNG_COLL_ZIP(n_O2_LUNG,n_CO2_LUNG, n_N2_LUNG)
 
 global VLinit VLmax VTinit VTmax Pint_init KP A1 A2 A3 A4  FLAGGA VLprev  VT VLmin VL Pint NN VLinit0 CLUNG VLprev0

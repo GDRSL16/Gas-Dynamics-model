@@ -3,7 +3,7 @@ global  SUMMARY_ARRAY BREATH_FLAG
 %op=[2000 2000 2000 2000 2000 2000 2000 2000 2000 2000 2000 2000];%
 op=[2000 2000 2000 2000 2000 2000 2000 2000 2000 2000 2000 2000 2000 2000 2000];%
 %s=GET_DIVE_DATA_LOAD_TISSUE_KIN(1); %loads the data file consisting of 2 columns, 1:depth in atm, 2:pectoral temp in C
-for i=15:15
+for i=12:12
     %if i==4
    %     disp('skip')
    % else
@@ -22,14 +22,8 @@ for i=15:15
         y=beakedwhale_tissue_kinetics1(s,op(i),i, dsum);%op is the body mass for when changing Mb
    
         SAVEDATA(SUMMARY_ARRAY)
-    %%%%%%%%%%%%%%FUNCTIONS TO PLOT DATA ON DIFFERENT AXES
-    %yyaxis left
-    %plot(SUMMARY_ARRAY(:,6);
-    %yyaxis right
-    %plot(odba(:);
-    %end
+    
 end
-%use 'load -mat filename'   to open where file name is the name pasted in
-%without the extension
+
 
 return

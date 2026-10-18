@@ -1,3 +1,16 @@
+% ========================================================================
+% Documentation reviewed: 2026-10-18 | Batch 01
+% Purpose: Load the time-series dive and locomotion inputs for tissue kinetics.
+% Interface: whale_id selects the input; columns are described in the original file header.
+% Review note: Input selection and CSV conventions are retained unchanged.
+% Scope: Documentation only; all pre-existing lines remain unchanged.
+% ========================================================================
+
+% ============================================================
+% Documentation review: 2026-10-18 | Batch 01
+% Scope: Review tracking header only; original code preserved.
+% Numerical calculations, logic, and existing comments unchanged.
+% ============================================================
 function data = GET_DIVE_DATA_LOAD_TISSUE_KIN(whale_id)
 % GET_DIVE_DATA_LOAD_TISSUE_KIN_MAC - Load dive data for a specific whale.
 %
