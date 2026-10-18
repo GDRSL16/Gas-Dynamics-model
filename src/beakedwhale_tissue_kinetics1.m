@@ -53,17 +53,17 @@ N=length(s); %number data points
 % ===== BREATH EVENTS =====
 global BREATH_FLAG
 
-BREATH_FLAG = zeros(size(N,1));
+%BREATH_FLAG = zeros(size(N,1));
 
-breath_rows = [ ...
-    90, ...
-    1688, 1700, 1768, ...
-    3295, 3330, 3390, 3440, 3480, ...
-    8750, 8780, 8810, 8825, 8842, ...
-    10378, 10400, 10430, 10450, 10480, ...
-    11740, 11760, 11790, 11810, 11835, 13190, 13210];
+%breath_rows = [ ...
+%    90, ...
+%    1688, 1700, 1768, ...
+%    3295, 3330, 3390, 3440, 3480, ...
+%    8750, 8780, 8810, 8825, 8842, ...
+%    10378, 10400, 10430, 10450, 10480, ...
+%    11740, 11760, 11790, 11810, 11835, 13190, 13210];
 
-BREATH_FLAG(breath_rows) = 1;
+%BREATH_FLAG(breath_rows) = 0;
 %%%%%%%%%%%%%%%END DUMMY CALL FOR BREATHS
 
 
@@ -150,40 +150,45 @@ SUMMARY_ARRAY=[N2_ARRAY(:,:,1) O2_ARRAY(:,:,1) CO2_ARRAY(:,:,1) ART_VEN_PN2 ART_
 %plot(O2_ARRAY(:,2,1))
 %dd=[ART_VEN_PN2(:,1) ART_VEN_PN2(:,2) SUMMARY_ARRAY(:,3) ];
 %save dd dd -ascii -tabs -double
-%save SUMMARY_ARRAY SUMMARY_ARRAY -ascii -tabs -double
+save SUMMARY_ARRAY SUMMARY_ARRAY -ascii -tabs -double
 y=1;
 %plot([dd(:,1) dd(:,2) dd(:,3)])
 %plot([dd(:,1) dd(:,2) ])
 %timearrayend = clock
 
-odba=GET_DIVE_ODBA(new_i);%extract odba data to save with output data
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%CAN INVOKE LATER WHEN MODEL WORKS COMMENT OUT
+%%%%%%%%%%%%%%%%%%%%%%%%%%%NOW TO RUN DUMMY DIVE DATA
+%odba=GET_DIVE_ODBA(new_i);%extract odba data to save with output data
 %dADL=GET_DIVE_DYNAMIC_ADL(dsum);%new function Aug 9, 2022 that pulls out the dyanmic aerobic dive limit, i.e. the cADL for each dive, new_i us used to get start and end of each dive
-%save dsum dsum -ascii -tabs
-%save SUMMARY_ARRAY SUMMARY_ARRAY -ascii -tabs
-O2_CO2_N2_PP=GET_O2_CO2_N2_PP(dsum, SUMMARY_ARRAY);%New function Aug 2024, pulls out last 5 values before surface of PO2, PCO2 and PN2
-%save dADL dADL -ascii -tabs
-%save STORES STORES -ascii -tabs
-%odba=odba(:,3);
- length(odba)
+
+            %save dsum dsum -ascii -tabs
+           %save SUMMARY_ARRAY SUMMARY_ARRAY -ascii -tabs
+%O2_CO2_N2_PP=GET_O2_CO2_N2_PP(dsum, SUMMARY_ARRAY);%New function Aug 2024, pulls out last 5 values before surface of PO2, PCO2 and PN2
+              %save dADL dADL -ascii -tabs
+                %save STORES STORES -ascii -tabs
+              %odba=odba(:,3);
+
  length(SUMMARY_ARRAY)
  %SAVEDATA(SUMMARY_ARRAY)
- SUMMARY_ARRAY=[SUMMARY_ARRAY(:,:) odba(:,3) s(:,4)]; %add ODBA and COL
+ 
+ %SUMMARY_ARRAY=[SUMMARY_ARRAY(:,:) odba(:,3) s(:,4)]; %add ODBA and COL
 
 
-base = prefixes{new_i};
+%base = prefixes{new_i};
 
-outFolder = fullfile(pwd, 'model_outputs');
-if ~exist(outFolder, 'dir'), mkdir(outFolder); end
+%outFolder = fullfile(pwd, 'model_outputs');
+%if ~exist(outFolder, 'dir'), mkdir(outFolder); end
 
-saveTabWithHeader(fullfile(outFolder, [base '-summary-array.txt']), SUMMARY_ARRAY, headers.summary);
+%saveTabWithHeader(fullfile(outFolder, [base '-summary-array.txt']), SUMMARY_ARRAY, headers.summary);
 %saveTabWithHeader(fullfile(outFolder, [base '-dADL.txt']),          dADL,          headers.dADL);
-saveTabWithHeader(fullfile(outFolder, [base '-O2_CO2_N2_PP.txt']),  O2_CO2_N2_PP,  headers.O2_CO2_N2_PP);
+%saveTabWithHeader(fullfile(outFolder, [base '-O2_CO2_N2_PP.txt']),  O2_CO2_N2_PP,  headers.O2_CO2_N2_PP);
 
-if ~isempty(QTOTARRAY)
-    saveTabWithHeader(fullfile(outFolder, [base '-QTOTARRAY.txt']), QTOTARRAY, headers.QTOTARRAY);
-end
-if ~isempty(STORES)
-    saveTabWithHeader(fullfile(outFolder, [base '-STORES.txt']), STORES, headers.STORES);
-end
+%if ~isempty(QTOTARRAY)
+%    saveTabWithHeader(fullfile(outFolder, [base '-QTOTARRAY.txt']), QTOTARRAY, headers.QTOTARRAY);
+%end
+%if ~isempty(STORES)
+%    saveTabWithHeader(fullfile(outFolder, [base '-STORES.txt']), STORES, headers.STORES);
+%end
 
 

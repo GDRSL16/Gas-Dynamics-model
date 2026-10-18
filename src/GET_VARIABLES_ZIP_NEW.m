@@ -39,7 +39,7 @@ global nO2DOT_HEART_ORIGINAL nO2DOT_MUSCLE_ORIGINAL nO2DOT_BRAIN_ORIGINAL nO2DOT
 % INHALED_FRACTION: fraction of available capacity refilled at ambient dry
 % pressure (0=none; 1=to VLmax). Values can later vary per breath.
 % Defaults reproduce the current full-exhalation/full-inspiration experiment.
-EXHALED_FRACTION=1.0;
+EXHALED_FRACTION=1.0;%Can only be between 1 and 0;
 INHALED_FRACTION=1.0;
 
 deltaT=1;%the time step of the data and to be used in calculations in sec

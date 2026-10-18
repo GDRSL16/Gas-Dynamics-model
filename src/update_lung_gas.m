@@ -110,8 +110,8 @@ if BREATH_FLAG(i)==1
     % 4. Check physical gas amounts
     moles_ok = ~any(~isfinite(n_new)) && ~any(n_new < 0);
 
-    fprintf('Breath %d: V=%.4f L, mole error=%.2e, pressure error=%.2e\n', ...
-        i,V_new,max(abs(mole_error)),abs(pressure_error));
+    %fprintf('Breath %d: V=%.4f L, mole error=%.2e, pressure error=%.2e\n', ...
+    %    i,V_new,max(abs(mole_error)),abs(pressure_error));
 
     assert(max(abs(mole_error)) < 1e-10, ...
         'Gas mole conservation failed');
