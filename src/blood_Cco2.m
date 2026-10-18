@@ -1,3 +1,9 @@
+% ========================================================================
+% Second-round internal documentation review: 2026-10-18 | Batch 03
+% File: blood_Cco2.m
+% Review focus: Gas content, saturation, tension, or acid-base helper. Confirm whether the input is pressure, content, saturation or moles and record units from the actual implementation.
+% Documentation only: original MATLAB source follows unchanged.
+% ========================================================================
 % ============================================================
 % Documentation review: 2026-10-18 | Batch 04
 % File: blood_Cco2.m

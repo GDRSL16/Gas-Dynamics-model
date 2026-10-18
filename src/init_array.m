@@ -1,4 +1,10 @@
 % ========================================================================
+% Second-round internal documentation review: 2026-10-18 | Batch 05
+% File: init_array.m
+% Review focus: Review input/output dimensions, global state, units and call-site assumptions before further refactoring.
+% Documentation only: original MATLAB source follows unchanged.
+% ========================================================================
+% ========================================================================
 % Documentation reviewed: 2026-10-18 | Batch 02
 % Purpose: Initialize gas-state arrays and starting tissue/lung values.
 % Interface: No arguments; uses globally configured array dimensions and initial gas stores.

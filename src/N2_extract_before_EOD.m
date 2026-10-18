@@ -1,3 +1,9 @@
+% ========================================================================
+% Second-round internal documentation review: 2026-10-18 | Batch 02
+% File: N2_extract_before_EOD.m
+% Review focus: Post-processing extraction. Verify array indexing, output units and assumptions about dive boundaries.
+% Documentation only: original MATLAB source follows unchanged.
+% ========================================================================
 % ============================================================
 % Code documentation review: 2026-10-18 (Batch 03)
 % Purpose: Extracts N2 tension measurements near the end of dives.

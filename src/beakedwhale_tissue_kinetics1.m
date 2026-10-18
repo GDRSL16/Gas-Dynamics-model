@@ -1,3 +1,9 @@
+% ========================================================================
+% Second-round internal documentation review: 2026-10-18 | Batch 03
+% File: beakedwhale_tissue_kinetics1.m
+% Review focus: Main simulation time-step controller. Breath scheduling, pressure updates, and tissue/blood exchange ordering are scientifically important; preserve their execution order.
+% Documentation only: original MATLAB source follows unchanged.
+% ========================================================================
 % ============================================================
 % Documentation review: 2026-10-18 | Batch 04
 % File: beakedwhale_tissue_kinetics1.m

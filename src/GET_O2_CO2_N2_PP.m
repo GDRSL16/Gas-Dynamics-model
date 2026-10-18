@@ -14,6 +14,8 @@
 %This function pulls out the value of PO2, PCO2 and PN2 at the start of the
 %dive and the mean of the last 3 values before reaching the surface
 function O2_CO2_N2_PP=GET_O2_CO2_N2_PP(dsum, SUMMARY_ARRAY)
+% Output interpretation: summarizes compartment gas partial pressures near dive boundaries.
+% Check the existing window indices before interpreting these values as instantaneous tensions.
 
 num_dives= length(dsum)-1;%number of dives in record
 %no_dive=1;%dive counter which is used to get row of dADL

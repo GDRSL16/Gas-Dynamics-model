@@ -1,3 +1,9 @@
+% ========================================================================
+% Second-round internal documentation review: 2026-10-18 | Batch 06
+% File: update_lung_gas.m
+% Review focus: Lung gas inventory and breath-event update. Distinguish ventilation additions/removals from blood-lung exchange; pressure and volume consistency are separate checks.
+% Documentation only: original MATLAB source follows unchanged.
+% ========================================================================
 % ============================================================
 % Documentation review: 2026-10-18 | Batch 06
 % File: update_lung_gas.m

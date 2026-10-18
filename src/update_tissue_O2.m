@@ -1,3 +1,9 @@
+% ========================================================================
+% Second-round internal documentation review: 2026-10-18 | Batch 07
+% File: update_tissue_O2.m
+% Review focus: Oxygen tissue exchange. Distinguish gas transfer from metabolic oxygen consumption; maintain existing compartment conventions.
+% Documentation only: original MATLAB source follows unchanged.
+% ========================================================================
 % ============================================================
 % Documentation review: 2026-10-18 | Batch 07
 % File: update_tissue_O2.m

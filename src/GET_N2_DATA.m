@@ -12,6 +12,8 @@
 % Numerical calculations, logic, and existing comments unchanged.
 % ============================================================
 function y=GET_N2_DATA
+% Legacy utility: this is an interactive data import, not an N2 kinetic calculation.
+% The selected file format and downstream interpretation are caller responsibilities.
 disp('Please provide the name of for the array of outcome data.');
 [filename,pathname]=uigetfile('*.*','Outcome Data File Name');%gives the name of file and path
 disp(['Data file name: ' filename]);%displays the file name chosen

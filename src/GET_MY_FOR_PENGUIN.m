@@ -12,6 +12,8 @@
 % Numerical calculations, logic, and existing comments unchanged.
 % ============================================================
 function my=GET_MY_FOR_PENGUIN(l,depth,t); 
+% Numerical interpretation: the first derivative sample is set to zero;
+% subsequent values use successive depth differences divided by t.
 my=zeros(l,1);
 
 for i=2:l

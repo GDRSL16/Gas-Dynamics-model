@@ -12,6 +12,8 @@
 % Numerical calculations, logic, and existing comments unchanged.
 % ============================================================
 function data = GET_DIVE_SUMMARY_DATA_METABOLIC_RATES(whale_id)
+% Input contract: selected summary rows define dive and surface intervals.
+% Indexing note: these intervals must refer to the same sampling grid as the depth series.
 % GET_DIVE_SUMMARY_DATA_METABOLIC_RATES_MAC - Load summary metabolic rate data for a specific whale.
 %
 % This function loads summary data for a given whale based on its ID.

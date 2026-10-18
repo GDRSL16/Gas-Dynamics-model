@@ -1,3 +1,9 @@
+% ========================================================================
+% Second-round internal documentation review: 2026-10-18 | Batch 03
+% File: adjust_Q_tachycardia.m
+% Review focus: Circulatory adjustment. Document how cardiac output/perfusion changes with dive response while retaining original conditionals.
+% Documentation only: original MATLAB source follows unchanged.
+% ========================================================================
 % ============================================================
 % Code documentation review: 2026-10-18 (Batch 03)
 % Purpose: Adjusts blood-package perfusion for elevated cardiac output.

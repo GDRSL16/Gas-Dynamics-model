@@ -1,4 +1,10 @@
 % ========================================================================
+% Second-round internal documentation review: 2026-10-18 | Batch 02
+% File: GET_VARIABLES_ZIP_NEW.m
+% Review focus: Model parameter and state initialization. Check units and global-variable ownership against the variable dictionary; do not assume every assigned quantity is constant over a dive.
+% Documentation only: original MATLAB source follows unchanged.
+% ========================================================================
+% ========================================================================
 % Documentation reviewed: 2026-10-18 | Batch 02
 % Purpose: Initialize physiological parameters, tissue compartments and ventilation settings.
 % Interface: op is passed from the driver; the function initializes many global variables.

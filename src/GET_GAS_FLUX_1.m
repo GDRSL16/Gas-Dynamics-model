@@ -21,6 +21,10 @@
 %This is the function that leads the tension estimations
 %splitting dive response into different dive durations, Aug 13, 2022
 function GET_GAS_FLUX_1(dsum)
+% Execution overview: the main time-step loop coordinates dive-response state,
+% blood circulation and lung/tissue gas updates through shared global arrays.
+% Conservation and timing checks should be applied to the completed step, not assumed
+% from an individual gas-update routine alone.
 global N   CO2_ARRAY P_AMB  BLOOD_PARTITIONS_ART BLOOD_PARTITIONS_VEN ART_VEN_PN2%global variables initialized here
 global TEMP_ARRAY  ART_VEN_nN2 GAS_CONSTANT  B_VOL_PACKAGE_VEN SN2_BLOOD P_AMB ADJ_BLOOD_VOL_LUNG_N2
 global ART_VEN_nO2 ART_VEN_PO2 ART_VEN_PO2 ART_VEN_PCO2 DEBUG SONAR_FLAG  ART_VEN_nCO2 

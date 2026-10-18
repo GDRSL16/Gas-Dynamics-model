@@ -12,6 +12,8 @@
 % Numerical calculations, logic, and existing comments unchanged.
 % ============================================================
 function data = GET_DIVE_DATA_LOAD_TISSUE_KIN(whale_id)
+% Input contract: whale_id indexes file_map; returned columns drive the time-step simulation.
+% Validation note: verify depth, locomotion and time alignment against the matching dive summary.
 % GET_DIVE_DATA_LOAD_TISSUE_KIN_MAC - Load dive data for a specific whale.
 %
 % This function loads dive data for a given whale based on its ID.

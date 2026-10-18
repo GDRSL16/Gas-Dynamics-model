@@ -1,4 +1,10 @@
 % ========================================================================
+% Second-round internal documentation review: 2026-10-18 | Batch 02
+% File: LOAD_DEPTH_DATA_ASCENT.m
+% Review focus: Input loader. File format, indexing, time alignment and missing-data behavior should be documented from the calling workflow.
+% Documentation only: original MATLAB source follows unchanged.
+% ========================================================================
+% ========================================================================
 % Documentation reviewed: 2026-10-18 | Batch 02
 % Purpose: Interactively load depth-related data used for ascent analysis.
 % Interface: No arguments; returns the selected file as a numeric array.

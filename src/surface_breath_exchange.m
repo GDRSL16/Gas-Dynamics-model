@@ -1,3 +1,9 @@
+% ========================================================================
+% Second-round internal documentation review: 2026-10-18 | Batch 06
+% File: surface_breath_exchange.m
+% Review focus: Finite surface breath operation. Track retained gas, exhaled gas, inspired gas and final gas composition; no changes to the current mixing assumptions.
+% Documentation only: original MATLAB source follows unchanged.
+% ========================================================================
 % ============================================================
 % Documentation review: 2026-10-18 | Batch 06
 % File: surface_breath_exchange.m

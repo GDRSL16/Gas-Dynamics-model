@@ -12,6 +12,8 @@
 % Numerical calculations, logic, and existing comments unchanged.
 % ============================================================
 function data = GET_BREATH_FLAGS(whale_id)
+% Input contract: whale_id indexes file_map; output rows must align with the model time steps.
+% Validation note: this loader checks selection and nonempty data, not the physiological timing of breaths.
 % GET_BREATH_FLAGS - Load breath data for a specific whale.
 %
 % This function loads breath data for a given whale based on its ID.

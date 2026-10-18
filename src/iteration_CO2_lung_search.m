@@ -1,4 +1,10 @@
 % ========================================================================
+% Second-round internal documentation review: 2026-10-18 | Batch 05
+% File: iteration_CO2_lung_search.m
+% Review focus: Iterative lung gas solution. Convergence conditions and iteration order are part of the numerical method; do not modify them during documentation review.
+% Documentation only: original MATLAB source follows unchanged.
+% ========================================================================
+% ========================================================================
 % Documentation reviewed: 2026-10-18 | Batch 02
 % Purpose: Calculate pulmonary CO2 transfer and arterial CO2 state for one step.
 % Interface: Inputs include prior lung/venous CO2, ambient conditions, time index and shunt.

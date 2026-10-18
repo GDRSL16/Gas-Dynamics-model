@@ -1,3 +1,9 @@
+% ========================================================================
+% Second-round internal documentation review: 2026-10-18 | Batch 05
+% File: plot_dive_summary.m
+% Review focus: Diagnostic visualization only. Verify column mapping against the two header rows of SUMMARY_ARRAY before interpreting tissue or blood traces.
+% Documentation only: original MATLAB source follows unchanged.
+% ========================================================================
 % ============================================================
 % Documentation review: 2026-10-18 | Batch 06
 % File: plot_dive_summary.m

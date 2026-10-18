@@ -1,4 +1,10 @@
 % ========================================================================
+% Second-round internal documentation review: 2026-10-18 | Batch 02
+% File: GET_VARIABLES_LUNG_COLL_ZIP.m
+% Review focus: Lung-collapse parameter initialization. Distinguish geometric volumes, pressures, and shunt-related quantities when documenting equations.
+% Documentation only: original MATLAB source follows unchanged.
+% ========================================================================
+% ========================================================================
 % Documentation reviewed: 2026-10-18 | Batch 02
 % Purpose: Initialize lung-compression parameters and initial lung-volume state.
 % Interface: Inputs are initial O2, CO2 and N2 lung moles; results are global variables.

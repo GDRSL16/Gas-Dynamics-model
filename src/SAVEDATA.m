@@ -1,3 +1,9 @@
+% ========================================================================
+% Second-round internal documentation review: 2026-10-18 | Batch 03
+% File: SAVEDATA.m
+% Review focus: Output writer. Preserve the existing header/column order and file formatting because SUMMARY_ARRAY files are regression-test references.
+% Documentation only: original MATLAB source follows unchanged.
+% ========================================================================
 % ============================================================
 % Code documentation review: 2026-10-18 (Batch 03)
 % Purpose: Legacy routine for saving model summary outputs.

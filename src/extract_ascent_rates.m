@@ -1,3 +1,9 @@
+% ========================================================================
+% Second-round internal documentation review: 2026-10-18 | Batch 05
+% File: extract_ascent_rates.m
+% Review focus: Post-processing extraction. Verify array indexing, output units and assumptions about dive boundaries.
+% Documentation only: original MATLAB source follows unchanged.
+% ========================================================================
 % ============================================================
 % Documentation review: 2026-10-18 | Batch 05
 % File: extract_ascent_rates.m

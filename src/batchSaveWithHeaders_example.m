@@ -1,3 +1,9 @@
+% ========================================================================
+% Second-round internal documentation review: 2026-10-18 | Batch 03
+% File: batchSaveWithHeaders_example.m
+% Review focus: Output utility. Preserve exact data formatting and file naming used by downstream scripts.
+% Documentation only: original MATLAB source follows unchanged.
+% ========================================================================
 % ============================================================
 % Documentation review: 2026-10-18 | Batch 04
 % File: batchSaveWithHeaders_example.m

@@ -1,3 +1,9 @@
+% ========================================================================
+% Second-round internal documentation review: 2026-10-18 | Batch 02
+% File: N2_lung_coll.m
+% Review focus: Review input/output dimensions, global state, units and call-site assumptions before further refactoring.
+% Documentation only: original MATLAB source follows unchanged.
+% ========================================================================
 % ============================================================
 % Code documentation review: 2026-10-18 (Batch 03)
 % Purpose: Calculates pressure-dependent pulmonary compression and collapse.

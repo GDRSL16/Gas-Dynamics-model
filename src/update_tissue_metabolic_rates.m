@@ -1,3 +1,9 @@
+% ========================================================================
+% Second-round internal documentation review: 2026-10-18 | Batch 07
+% File: update_tissue_metabolic_rates.m
+% Review focus: Metabolic demand assignment. Confirm units and timing of activity-dependent changes when creating a parameter dictionary.
+% Documentation only: original MATLAB source follows unchanged.
+% ========================================================================
 % ============================================================
 % Documentation review: 2026-10-18 | Batch 07
 % File: update_tissue_metabolic_rates.m

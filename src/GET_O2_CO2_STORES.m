@@ -19,6 +19,9 @@
 %9-CO2store-venous blood, 10-O2 store lung
 
 function y=GET_O2_CO2_STORES(i)
+% Output interpretation: collects compartment and circulating O2/CO2 store estimates.
+% Units and component ordering follow the existing arrays and should be verified
+% against the variable dictionary before publication.
 global R CO2_ARRAY O2_ARRAY ART_VEN_O2_STORE STORES ART_VEN_CO2_STORE
 
 %%%%O2 section

@@ -1,3 +1,9 @@
+% ========================================================================
+% Second-round internal documentation review: 2026-10-18 | Batch 06
+% File: update_tissue_CO2.m
+% Review focus: Carbon dioxide tissue exchange. Distinguish gas transfer from metabolic CO2 production and buffering assumptions.
+% Documentation only: original MATLAB source follows unchanged.
+% ========================================================================
 % ============================================================
 % Documentation review: 2026-10-18 | Batch 07
 % File: update_tissue_CO2.m

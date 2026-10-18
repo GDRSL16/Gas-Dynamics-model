@@ -1,3 +1,9 @@
+% ========================================================================
+% Second-round internal documentation review: 2026-10-18 | Batch 06
+% File: update_N2_case_A_or_C.m
+% Review focus: Gas-specific lung/blood exchange branch. Case selection and gas flux sign conventions should be documented against the corresponding physiological equations.
+% Documentation only: original MATLAB source follows unchanged.
+% ========================================================================
 % ============================================================
 % Documentation review: 2026-10-18 | Batch 06
 % File: update_N2_case_A_or_C.m

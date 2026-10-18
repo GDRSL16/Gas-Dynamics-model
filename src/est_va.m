@@ -1,3 +1,9 @@
+% ========================================================================
+% Second-round internal documentation review: 2026-10-18 | Batch 04
+% File: est_va.m
+% Review focus: Alveolar volume estimation. Distinguish tracheal and alveolar gas volumes and check consistency with pressure-dependent collapse.
+% Documentation only: original MATLAB source follows unchanged.
+% ========================================================================
 % ============================================================
 % Documentation review: 2026-10-18 | Batch 05
 % File: est_va.m

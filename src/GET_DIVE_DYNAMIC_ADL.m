@@ -23,6 +23,8 @@
 %for dive, 13=adjusted total MR for dive, 14=SI duration, 15=dive duration,
 %16=maximal dive depth
 function dADL=GET_DIVE_DYNAMIC_ADL(dsum)
+% Physiological interpretation: this routine assembles O2-store and metabolic summaries
+% at dive boundaries; it does not itself determine the onset of hypoxia.
 global R P_AMB O2_ARRAY ART_VEN_O2_STORE METABOLIC_RATES
 %METABOLIC_RATES are computed in update_tissue_metabolic_rates
 num_dives= size(dsum,1)-1;%number of dives in record

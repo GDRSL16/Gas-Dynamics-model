@@ -13,6 +13,8 @@
 % ============================================================
 %This function asks the user for the data array and inputs it into an array, these modified data files 
 function y=GET_DIVE_ODBA(i);
+% Legacy input selector: numeric recording indices and file paths are fixed in this routine.
+% Portability note: machine-specific paths should be configured separately in a future functional revision.
 %disp('Please provide the name of for the array of outcome data.');
 %[filename,pathname]=uigetfile('*.txt','Outcome Data File Name');%gives the name of file and path
 %disp(['Data file name: ' filename]);%displays the file name chosen
