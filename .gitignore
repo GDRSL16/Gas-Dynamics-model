@@ -1,3 +1,51 @@
 src/shallow-SUMMARY_ARRAY.txt
 src/model_outputs/First sensitivity test of exhalation model with varying fractions/ventilation_run_F.mat
 src/model_outputs/First sensitivity test of exhalation model with varying fractions/ventilation_run_E.mat
+src/model_outputs/First sensitivity test of exhalation model with varying fractions/fat_O2_with_pressure.png
+src/SUMMARY_ARRAY
+src/tests/lung_gas_transition_1680_1710.csv
+src/Vtot.m
+src/test_lung_gas_transition.m
+src/SONAR_FLAG
+archive/2026-10-16-failed-ventilation/1016-1345.mat
+archive/2026-10-16-failed-ventilation/1016-1444.mat
+archive/2026-10-16-failed-ventilation/1016-1456.mat
+archive/2026-10-16-failed-ventilation/1016-1548.mat
+archive/2026-10-16-failed-ventilation/1016-1742.mat
+archive/2026-10-16-failed-ventilation/adjust_Q.m
+archive/2026-10-16-failed-ventilation/adjust_Q_bradycardia.m
+archive/2026-10-16-failed-ventilation/adjust_Q_tachycardia.m
+archive/2026-10-16-failed-ventilation/batchSaveWithHeaders_example.m
+archive/2026-10-16-failed-ventilation/Gas-dynamics-model-2026-10-15-debug.zip..zip
+src/13-shallow_20x600s_20m_summary.csv
+src/13-shallow_20x600s_20m_data.csv
+src/14-intermediate_10x1200s_400m_breath_flags.csv
+src/13-shallow_20x600s_20m_breath_flags.csv
+src/1018-1812.mat
+src/15-deep_5x3000s_1200m_breath_flags.csv
+src/14-intermediate_10x1200s_400m_summary.csv
+src/15-deep_5x3000s_1200m_summary.csv
+src/15-deep_5x3000s_1200m_data.csv
+src/deep-SUMMARY_ARRAY.txt
+src/figures/fig1.png
+src/figures/fig2.png
+src/figures/fig3.png
+src/figures/fig4.png
+src/figures/fig5.png
+src/figures/fig6.png
+src/intermed-SUMMARY_ARRAY.txt
+src/model_outputs/12-Zica-20240227-240128-dADL.txt
+src/model_outputs/12-Zica-20240227-240128-O2_CO2_N2_PP.txt
+src/model_outputs/12-Zica-20240227-240128-STORES.txt
+src/model_outputs/12-Zica-20240227-240128-QTOTARRAY.txt
+src/model_outputs/12-Zica-20240227-240128-summary-array.txt
+src/model_outputs/First sensitivity test of exhalation model with varying fractions/fat_CO2_with_pressure.png
+src/model_outputs/First sensitivity test of exhalation model with varying fractions/fat_N2_with_pressure.png
+src/model_outputs/First sensitivity test of exhalation model with varying fractions/lung_CO2_with_pressure.png
+src/model_outputs/First sensitivity test of exhalation model with varying fractions/lung_N2_with_pressure.png
+src/model_outputs/First sensitivity test of exhalation model with varying fractions/lung_O2_with_pressure.png
+src/model_outputs/First sensitivity test of exhalation model with varying fractions/lung_volume_with_pressure.png
+src/model_outputs/First sensitivity test of exhalation model with varying fractions/muscle_CO2_with_pressure.png
+src/model_outputs/First sensitivity test of exhalation model with varying fractions/muscle_N2_with_pressure.png
+src/model_outputs/12-Zica-20240227-240128-summary-array.txt
+src/breath_debug_test.mat
