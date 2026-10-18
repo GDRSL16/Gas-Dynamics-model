@@ -1,3 +1,10 @@
+% ============================================================
+% Documentation review: 2026-10-18 | Batch 06
+% File: update_CO2_case_A_or_C.m
+% Function signature: [P_CO2_lung_t,n_CO2_lung_t,P_CO2_art_t,n_CO2_art_t]=update_CO2_case_A_or_C(Vblood, sCO2_blood,rt,breath_gas);
+% Scope: documentation only; numerical model unchanged.
+% Original source preserved verbatim below this header.
+% ============================================================
 % FINITE BREATH / LEGACY SURFACE - CO2
 % Optional breath_gas is 3x2: rows N2,O2,CO2; columns pressure(atm), moles.
 % CO2 blood content depends on both lung PCO2 and PO2.

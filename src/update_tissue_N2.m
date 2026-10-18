@@ -1,3 +1,10 @@
+% ============================================================
+% Documentation review: 2026-10-18 | Batch 07
+% File: update_tissue_N2.m
+% Function signature: [n_N2_ven_t,P_N2_ven_t]=update_tissue_N2(Pamb,i, pect,rt);
+% Scope: documentation only; numerical model unchanged.
+% Original source preserved verbatim below this header.
+% ============================================================
   function [n_N2_ven_t,P_N2_ven_t]=update_tissue_N2(Pamb,i, pect,rt);
 %This funtion updates the tissue tensions. It separates the "arterial blood" flow based on percentages of total blood flow to each of the tissues
 %The N2 is then updated 

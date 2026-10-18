@@ -1,3 +1,10 @@
+% ============================================================
+% Documentation review: 2026-10-18 | Batch 06
+% File: update_lung_gas.m
+% Function signature: [n_N2_art_t,P_N2_art_t,n_O2_art_t,P_O2_art_t, n_CO2_art_t,P_CO2_art_t]=update_lung_gas(Pamb,i,pect)
+% Scope: documentation only; numerical model unchanged.
+% Original source preserved verbatim below this header.
+% ============================================================
 % GAS DYNAMICS MODEL - LUNG GAS UPDATE
 % BREATH_FLAG(i)=1: finite exhalation/inspiration in moles; bypass est_va.
 % Otherwise: preserve existing finite pulmonary gas exchange iteration.

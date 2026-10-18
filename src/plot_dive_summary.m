@@ -1,3 +1,10 @@
+% ============================================================
+% Documentation review: 2026-10-18 | Batch 06
+% File: plot_dive_summary.m
+% Function signature: plot_dive_summary(whichRun, folder)
+% Scope: documentation only; numerical model unchanged.
+% Original source preserved verbatim below this header.
+% ============================================================
 function plot_dive_summary(whichRun, folder)
 % PLOT_DIVE_SUMMARY Plot tissue, blood and ambient-pressure traces.
 %   plot_dive_summary(1) : shallow

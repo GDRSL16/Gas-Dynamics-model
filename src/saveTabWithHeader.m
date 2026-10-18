@@ -1,3 +1,10 @@
+% ============================================================
+% Documentation review: 2026-10-18 | Batch 06
+% File: saveTabWithHeader.m
+% Function signature: saveTabWithHeader(filename, data, headerRows, varargin)
+% Scope: documentation only; numerical model unchanged.
+% Original source preserved verbatim below this header.
+% ============================================================
 function saveTabWithHeader(filename, data, headerRows, varargin)
 % saveTabWithHeader  Write numeric matrix to a tab-delimited file with header lines.
 %

@@ -1,3 +1,10 @@
+% ============================================================
+% Documentation review: 2026-10-18 | Batch 07
+% File: update_tissue_CO2.m
+% Function signature: [n_CO2_ven_t,P_CO2_ven_t]=update_tissue_CO2(Pamb,i,pect,rt);
+% Scope: documentation only; numerical model unchanged.
+% Original source preserved verbatim below this header.
+% ============================================================
 function [n_CO2_ven_t,P_CO2_ven_t]=update_tissue_CO2(Pamb,i,pect,rt);
 %This funtion updates the tissue tensions. It separates the "arterial blood" flow based on percentages of total blood flow to each of the tissues
 %The O2 is then updated 

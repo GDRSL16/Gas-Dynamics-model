@@ -1,3 +1,10 @@
+% ============================================================
+% Documentation review: 2026-10-18 | Batch 06
+% File: surface_breath_exchange.m
+% Function signature: n_new = surface_breath_exchange( ...
+% Scope: documentation only; numerical model unchanged.
+% Original source preserved verbatim below this header.
+% ============================================================
 function n_new = surface_breath_exchange( ...
     n_old, V_gas, V_breath, P_inspired, RT, inspired_fraction)
 %SURFACE_BREATH_EXCHANGE Mix inspired gas into the existing lung gas.

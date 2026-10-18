@@ -1,3 +1,10 @@
+% ============================================================
+% Documentation review: 2026-10-18 | Batch 07
+% File: update_tissue_metabolic_rates.m
+% Function signature: update_tissue_metabolic_rates(row, multiplier_ht, multiplier_mus, multiplier_brain, multiplier_fat, dive_no, dive_response_flag)
+% Scope: documentation only; numerical model unchanged.
+% Original source preserved verbatim below this header.
+% ============================================================
 %this function adjusts the metabolic rate by a multiplier, i.1. multiplier
 %=0.5 means to reduce MR by 50%
 function update_tissue_metabolic_rates(row, multiplier_ht, multiplier_mus, multiplier_brain, multiplier_fat, dive_no, dive_response_flag)
