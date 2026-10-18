@@ -1,3 +1,10 @@
+% ============================================================
+% Documentation review: 2026-10-18 | Batch 04
+% File: batchSaveWithHeaders_example.m
+% MATLAB script; review original code for purpose and dependencies.
+% Review scope: documentation only; numerical model unchanged.
+% Original source preserved verbatim below this header.
+% ============================================================
 % batchSaveWithHeaders_example.m
 % Example driver showing how to call saveTabWithHeader in a loop.
 % Put this in the same folder and run it after your data for each iteration is

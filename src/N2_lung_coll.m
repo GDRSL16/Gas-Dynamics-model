@@ -1,3 +1,10 @@
+% ============================================================
+% Code documentation review: 2026-10-18 (Batch 03)
+% Purpose: Calculates pressure-dependent pulmonary compression and collapse.
+% Interface: Inputs: ambientpressure and time-step index i.
+% Notes: Ambient pressure is documented as absolute kPa; relies on model-wide global lung variables.
+% Review scope: Documentation only; model logic unchanged.
+% ============================================================
 %NOTE%NOTE%NOTE%NOTE%NOTE%NOTE%NOTE%NOTE%NOTE%
 %NOTE%NOTE%NOTE%NOTE
 %PAMB HAS TO BE IN kPa absolute i.e. surface

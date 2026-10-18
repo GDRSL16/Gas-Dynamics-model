@@ -1,3 +1,10 @@
+% ============================================================
+% Documentation review: 2026-10-18 | Batch 05
+% File: driver_to_beakedwhale_tissue_kin.m
+% MATLAB function: y=driver_to_beakedwhale_tissue_kin (u);
+% Review scope: documentation only; numerical model unchanged.
+% Original source preserved verbatim below this header.
+% ============================================================
 function y=driver_to_beakedwhale_tissue_kin (u);
 global  SUMMARY_ARRAY BREATH_FLAG
 %op=[2000 2000 2000 2000 2000 2000 2000 2000 2000 2000 2000 2000];%

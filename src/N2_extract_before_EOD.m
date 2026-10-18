@@ -1,3 +1,10 @@
+% ============================================================
+% Code documentation review: 2026-10-18 (Batch 03)
+% Purpose: Extracts N2 tension measurements near the end of dives.
+% Interface: Loads dive summaries, simulation outputs, and depth records.
+% Notes: Original code assumes a two-second sampling interval; verify source-data alignment.
+% Review scope: Documentation only; model logic unchanged.
+% ============================================================
 function y=N2_extract_before_EOD %extracts N2 tensions 5, 10, 15 and 30 sec before the end of the dive
 t=2;%the time between data points
 z=LOAD_SUMMARY_DATA;%file has 5 columns: 1=dive number, 2=row for start of dive, 3=row for end of dive, 4=row for max dive depth, 5=max depth

@@ -1,3 +1,10 @@
+% ============================================================
+% Documentation review: 2026-10-18 | Batch 05
+% File: extract_boutstartend_N2_tension.m
+% MATLAB function: y=extract_boutstartend_N2_tension
+% Review scope: documentation only; numerical model unchanged.
+% Original source preserved verbatim below this header.
+% ============================================================
 function y=extract_boutstartend_N2_tension
 t=2;%the time between data points
 z=LOAD_SUMMARY_DATA;%file has 2 columns: 1=row for start of bout, 2=row for end of bout

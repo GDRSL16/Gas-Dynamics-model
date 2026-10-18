@@ -1,3 +1,10 @@
+% ============================================================
+% Documentation review: 2026-10-18 | Batch 04
+% File: beakedwhale_tissue_kinetics1.m
+% MATLAB function: y=beakedwhale_tissue_kinetics1(s,op,new_i, dsum)%s=data file with all dive data, op=body mass of animal, new_i=the repeated record when running this repeatedly to find a record, dsum=data file containing all the summarized dive and surface interval data with metabolic rates for COL
+% Review scope: documentation only; numerical model unchanged.
+% Original source preserved verbatim below this header.
+% ============================================================
 %This is the driver for the tissue gas kinetics program
 function y=beakedwhale_tissue_kinetics1(s,op,new_i, dsum)%s=data file with all dive data, op=body mass of animal, new_i=the repeated record when running this repeatedly to find a record, dsum=data file containing all the summarized dive and surface interval data with metabolic rates for COL
 format long e

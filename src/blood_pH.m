@@ -1,3 +1,10 @@
+% ============================================================
+% Documentation review: 2026-10-18 | Batch 04
+% File: blood_pH.m
+% MATLAB function: y=blood_pH(po2,pco2)%units returned is l gas STPD /l blood
+% Review scope: documentation only; numerical model unchanged.
+% Original source preserved verbatim below this header.
+% ============================================================
 function y=blood_pH(po2,pco2)%units returned is l gas STPD /l blood
 %this uses Al's function to compute pH as estimated from seal blood,
 %Ersland and calusen 1969 in resp physiol

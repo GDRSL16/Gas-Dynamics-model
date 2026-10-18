@@ -1,3 +1,10 @@
+% ============================================================
+% Documentation review: 2026-10-18 | Batch 04
+% File: blood_lung_Po2.m
+% MATLAB function: y=blood_lung_Po2(pco2,nO2tot,Vlung,Vblood)%units returned is l gas STPD /l blood
+% Review scope: documentation only; numerical model unchanged.
+% Original source preserved verbatim below this header.
+% ============================================================
 function y=blood_lung_Po2(pco2,nO2tot,Vlung,Vblood)%units returned is l gas STPD /l blood
 %this uses Al's functions to compute O2 concentration from PO2
 %pco2=blood PCO2 at t-1, nO2tot=total mol O2 in blood and tissue after metabolism, Vtiss=tissue volume in l, Vblood=blood volume, 

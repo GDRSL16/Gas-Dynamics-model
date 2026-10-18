@@ -1,3 +1,10 @@
+% ============================================================
+% Code documentation review: 2026-10-18 (Batch 03)
+% Purpose: Computes myoglobin oxygen saturation using a Hill-type relationship.
+% Interface: Input: po2. Output: fractional myoglobin O2 saturation.
+% Notes: Uses global P50_MB and BETA_0_MB; no Bohr adjustment is applied.
+% Review scope: Documentation only; model logic unchanged.
+% ============================================================
 function y=Muscle_MbO2_sat(po2)%units returned is l gas STPD /l blood
 %Not sure that Mb is affected by CO2 in a similar fashion as Hb so I set
 %Bohr to 0, according to Al Olszowka, Mb is a monomer and it is unlikely

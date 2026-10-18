@@ -1,3 +1,10 @@
+% ============================================================
+% Documentation review: 2026-10-18 | Batch 05
+% File: extract_N2_tensions.m
+% MATLAB function: y=extract_N2_tensions(zx,u,depth)
+% Review scope: documentation only; numerical model unchanged.
+% Original source preserved verbatim below this header.
+% ============================================================
 function y=extract_N2_tensions(zx,u,depth)
 t=1;%the time between data points
 z=LOAD_SIMULATION_DATA(zx);%file has 5 columns: 1=dive number, 2=row for start of dive, 3=row for end of dive, 4=row for max dive depth, 5=max depth

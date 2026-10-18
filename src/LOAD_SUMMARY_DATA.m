@@ -1,3 +1,10 @@
+% ============================================================
+% Code documentation review: 2026-10-18 (Batch 03)
+% Purpose: Prompts for and loads a dive-summary text file.
+% Interface: Returns the loaded numeric summary matrix.
+% Notes: Uses a graphical file selector; the original comments describe the summary columns.
+% Review scope: Documentation only; model logic unchanged.
+% ============================================================
 %This function asks the user for the data array and inputs it into an array, these modified data files 
 function y=LOAD_SUMMARY_DATA
 disp('Please provide the name of for depth summary data.');

@@ -1,3 +1,10 @@
+% ============================================================
+% Documentation review: 2026-10-18 | Batch 05
+% File: extract_max_N2_tensions.m
+% MATLAB function: y=extract_max_N2_tensions(z, u, depth) %this program takes the rows for where a dive is occuring and looks for max PN2 for each tissue and also the PN2 for each tissue at max depth
+% Review scope: documentation only; numerical model unchanged.
+% Original source preserved verbatim below this header.
+% ============================================================
 function y=extract_max_N2_tensions(z, u, depth) %this program takes the rows for where a dive is occuring and looks for max PN2 for each tissue and also the PN2 for each tissue at max depth
 t=2;%the time between data points
 %z=LOAD_SUMMARY_DATA;%file has 3 columns: 1=dive number 2=row for start of dive, 3=row for end of dive, 4=row for max dive depth, 5=max depth 

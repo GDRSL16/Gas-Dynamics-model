@@ -1,3 +1,10 @@
+% ============================================================
+% Documentation review: 2026-10-18 | Batch 05
+% File: extract_ven_tens_at_depths.m
+% MATLAB function: y=extract_ven_tens_at_depths
+% Review scope: documentation only; numerical model unchanged.
+% Original source preserved verbatim below this header.
+% ============================================================
 function y=extract_ven_tens_at_depths
 t=2;%the time between data points
 z=LOAD_SUMMARY_DATA;%file has 14 columns: 1=row for depth150-100, 2=row for depth100-80, 3=row for depth80-50, 4=row for depth50-30, 5=row for depth30-10

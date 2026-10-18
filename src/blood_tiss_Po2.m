@@ -1,3 +1,10 @@
+% ============================================================
+% Documentation review: 2026-10-18 | Batch 05
+% File: blood_tiss_Po2.m
+% MATLAB function: y=blood_tiss_Po2(pco2,nO2tot, Vtiss,Vblood,stiss)%units returned is l gas STPD /l blood
+% Review scope: documentation only; numerical model unchanged.
+% Original source preserved verbatim below this header.
+% ============================================================
 function y=blood_tiss_Po2(pco2,nO2tot, Vtiss,Vblood,stiss)%units returned is l gas STPD /l blood
 %this uses Al's function to compute CO2 concentration from PCO2
 %pco2=pco2 of blood at t-1, nO2tot=total mol O2 in blood and tissue after metabolism, Vtiss=tissue volume in l, Vblood=blood volume, %stiss=solubility of O2 in tissue

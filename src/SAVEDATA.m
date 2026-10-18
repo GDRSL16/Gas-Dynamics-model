@@ -1,3 +1,10 @@
+% ============================================================
+% Code documentation review: 2026-10-18 (Batch 03)
+% Purpose: Legacy routine for saving model summary outputs.
+% Interface: Input: SUMMARY_ARRAY.
+% Notes: Function declaration uses savedata while filename is SAVEDATA.m; preserve original behavior and check usage before refactoring.
+% Review scope: Documentation only; model logic unchanged.
+% ============================================================
 function savedata(SUMMARY_ARRAY)
 %creating a filename as date-time to save data
 %not working

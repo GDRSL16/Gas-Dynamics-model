@@ -1,3 +1,10 @@
+% ============================================================
+% Code documentation review: 2026-10-18 (Batch 03)
+% Purpose: Legacy oxygen saturation calculation.
+% Interface: No declared input arguments; returns y.
+% Notes: WARNING: source contains incomplete expression PO2=; and references undeclared PCO2. Preserved without repair.
+% Review scope: Documentation only; model logic unchanged.
+% ============================================================
 %this is the equation for the O2 tissue tension
 function y= O2_saturation()
 global HB P50_O2 BETA_0 BOHR HALDANE STANDARD_BICARBONATE HB T_TIS

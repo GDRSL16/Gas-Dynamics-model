@@ -1,3 +1,10 @@
+% ============================================================
+% Documentation review: 2026-10-18 | Batch 04
+% File: blood_Co2.m
+% MATLAB function: y=blood_Co2(pco2,po2)%units returned is l gas is Body temperature standard pressure dry per l blood
+% Review scope: documentation only; numerical model unchanged.
+% Original source preserved verbatim below this header.
+% ============================================================
 function y=blood_Co2(pco2,po2)%units returned is l gas is Body temperature standard pressure dry per l blood
 %this uses Al's function to compute CO2 concentration from PCO2
 global O2_CAPACITY_HB SO2_BLOOD STPD_TO_BT

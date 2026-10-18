@@ -1,3 +1,10 @@
+% ============================================================
+% Code documentation review: 2026-10-18 (Batch 03)
+% Purpose: Adjusts blood-package circulation and tissue perfusion.
+% Interface: Inputs: perf_adjust and fractional tissue perfusion values.
+% Notes: Uses global blood package sizes and flow variables; package counts can change with perfusion.
+% Review scope: Documentation only; model logic unchanged.
+% ============================================================
 function adjust_Q(perf_adjust,frac_heart,frac_fat,frac_muscle,frac_brain)%the fractional flow of initial flow for total and then the fractional for each tissue
 %this function will not work properly if body mass changes as then the expanded or contracted arrays have mismatches
 global Q_TOT_INIT Q_HEART_INIT Q_FAT_INIT Q_MUSCLE_INIT Q_BRAIN_INIT TRANSIT_ART TRANSIT_VEN BLOOD_PARTITIONS_ART

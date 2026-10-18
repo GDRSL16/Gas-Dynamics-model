@@ -1,3 +1,10 @@
+% ============================================================
+% Documentation review: 2026-10-18 | Batch 04
+% File: blood_Pco2.m
+% MATLAB function: y=blood_Pco2(S,Cco2)
+% Review scope: documentation only; numerical model unchanged.
+% Original source preserved verbatim below this header.
+% ============================================================
 function y=blood_Pco2(S,Cco2)
 %this uses Al's function to compute PCO2 concentration from Cco2, and O2
 %saturation (S)

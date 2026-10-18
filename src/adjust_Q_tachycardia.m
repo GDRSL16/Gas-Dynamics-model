@@ -1,3 +1,10 @@
+% ============================================================
+% Code documentation review: 2026-10-18 (Batch 03)
+% Purpose: Adjusts blood-package perfusion for elevated cardiac output.
+% Interface: Inputs: perf_adjust, tissue fractions, AV shunt fraction and surface-interval index.
+% Notes: Uses globals to update circulation state; no numerical statements modified.
+% Review scope: Documentation only; model logic unchanged.
+% ============================================================
 function adjust_Q_tachycardia(perf_adjust,frac_heart,frac_muscle,frac_brain,frac_fat,frac_avshunt, SI_no)%the fractional flow of initial flow for total and then the fractional for each tissue       %ADD
 %perf_adjust must be a fraction of initial blood flow i.e. of perfusion goes to 150% of initial value then perf_adjust=1.5
 

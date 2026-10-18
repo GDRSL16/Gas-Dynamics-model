@@ -1,3 +1,10 @@
+% ============================================================
+% Documentation review: 2026-10-18 | Batch 05
+% File: est_va.m
+% MATLAB function: y=est_va(i,rt) %THE SHUNT EQUATION
+% Review scope: documentation only; numerical model unchanged.
+% Original source preserved verbatim below this header.
+% ============================================================
 % GAS DYNAMICS MODEL - ALVEOLAR VOLUME AND SHUNT
 % Invoked from the no-breath pathway of update_lung_gas.
 % Mechanical collapse is handled by N2_lung_coll when not at exact surface.

@@ -1,3 +1,10 @@
+% ============================================================
+% Documentation review: 2026-10-18 | Batch 04
+% File: blood_Po2.m
+% MATLAB function: y=blood_Po2(pco2,Co2)%units returned is l gas STPD /l blood
+% Review scope: documentation only; numerical model unchanged.
+% Original source preserved verbatim below this header.
+% ============================================================
 function y=blood_Po2(pco2,Co2)%units returned is l gas STPD /l blood
 %this uses Al's function to compute CO2 concentration from PCO2
 global P50_O2 BETA_0 BOHR O2_CAPACITY_HB SO2_BLOOD STPD_TO_BT DEBUG
