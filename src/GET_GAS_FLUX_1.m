@@ -43,9 +43,9 @@ RMR=VO2_TOT;%RMR is MR for the entire animal and this cannot be used to get the 
 RMMR=VO2_MUSCLE;%RMMR is Restimg Muscle Metabolic Rate and this should be used to create the multiplier VO2_MUSCLE is from Get_variables
 adjust_muscle=1;
 pect=37;
-max_iterations=13200;%Max for now-October 17, 2026 13200;
-for i=2:max_iterations
-%for i=2:N %for each data point
+%max_iterations=13200;%Max for now-October 17, 2026 13200;
+%for i=2:max_iterations
+for i=2:N %for each data point
     Pamb=P_AMB(i-1:i); %ambient pressure at time t-1 and t
  
     

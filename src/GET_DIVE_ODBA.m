@@ -45,7 +45,12 @@ elseif i==11
      y=csvread('11-Zica-20240227-233396_surfacings_1Hz-data.csv',1,0);%s
 elseif i==12
      y=csvread('12-Zica-20240227-240128_surfacings_1Hz-data.csv',1,0);%s
-
+elseif i==13
+     y=csvread('13-shallow_20x600s_20m_data.csv',1,0);%s
+elseif i==14
+     y=csvread('14-intermediate_10x1200s_400m_data.csv',1,0);%s
+elseif i==15
+     y=csvread('15-deep_5x3000s_1200m_data.csv',1,0);%s
     
 end
 %fullfilename=[pathname,filename];

@@ -70,7 +70,7 @@ n_CO2_ven_tmin1=TEMP_ARRAY((art_N2+ven_N2),2,3); %the number of moles in the ven
 P_CO2_lung_tmin1=CO2_ARRAY(i-1,5,1);%the partial pressure based of N2 in the lung at t-1.
 n_CO2_lung_tmin1=CO2_ARRAY(i-1,5,2);%the number of moles N2 in the lung at time t-1
 
-if BREATH_FLAG(i)==1
+if BREATH_FLAG(i)==1 %%Old case A and C joined and we assume that a breath is a sudddent excursion to the surface where gas is exchanged. This event by-passes the function est_va and ignnores any lung comrpession.
     % Finite breath at current dry ambient pressure. Gas order [N2 O2 CO2].
     % During this event ventilation is modeled explicitly in moles;
     % arterial blood is updated by the legacy instantaneous-equilibrium rule.
@@ -153,7 +153,7 @@ if BREATH_FLAG(i)==1
     [P_N2_lung_t,n_N2_lung_t,P_N2_art_t,n_N2_art_t]=update_N2_case_A_or_C(B_VOL_PACKAGE_VEN,SN2_BLOOD,rt,breath_gas);
     [P_O2_lung_t,n_O2_lung_t,P_O2_art_t,n_O2_art_t]=update_O2_case_A_or_C(B_VOL_PACKAGE_VEN,SO2_BLOOD,rt,breath_gas);
     [P_CO2_lung_t,n_CO2_lung_t,P_CO2_art_t,n_CO2_art_t]=update_CO2_case_A_or_C(B_VOL_PACKAGE_VEN,SCO2_BLOOD,rt,breath_gas);
-else
+else %%%%%%%OLD CASE B, D, E, F and G
     % All no-breath time steps use the original finite gas iteration.
     [n_N2_lung_t,P_N2_art_t,n_N2_art_t]=iteration_N2_lung_search(rt,i,P_N2_lung_tmin1,n_N2_lung_tmin1,P_N2_ven_tmin1,n_N2_ven_tmin1,Pamb,shunt);
     [n_O2_lung_t,P_O2_art_t,n_O2_art_t]=iteration_O2_lung_search(rt,i,P_O2_lung_tmin1,n_O2_lung_tmin1,P_O2_ven_tmin1,n_O2_ven_tmin1,Pamb,shunt);
@@ -167,6 +167,30 @@ else
     initialvalue=(N2_ARRAY(1,5,2)+O2_ARRAY(1,5,2)+CO2_ARRAY(1,5,2))*rt;
     currentvalue=(n_N2_lung_t+n_O2_lung_t+n_CO2_lung_t)*rt;
     VLinit=VLinit0*currentvalue/initialvalue;
+    
+    % =================Nov 1 2026=====================
+    % SURFACE LUNG VOLUME UPDATE
+    % At the surface, allow lung volume to change according to
+    % net pulmonary exchange of N2, O2 and CO2.
+    % This does not impose VLmax between breaths.
+    % ============================================================
+
+    if P_AMB(i)==SURFACE_VALUE
+
+        n_total_lung = n_N2_lung_t + n_O2_lung_t + n_CO2_lung_t;
+
+        V_surface = n_total_lung*rt/P_AMB(i);
+
+        if V_surface < VTinit
+            error('Surface lung volume below tracheal volume at row %d',i);
+        end
+
+        LUNG_VOL(i,1) = V_surface-VTinit;
+        LUNG_VOL(i,2) = VTinit;
+
+    end
+%%%%%%%%%%%%%%%%%%%END volume update Nov 1 2026%%%%%%%%%%
+
 end
 
 N2_ARRAY(i,5,1)=P_N2_lung_t;%updates lung N2 partial pressure
