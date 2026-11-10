@@ -14,9 +14,9 @@
 function y=driver_to_beakedwhale_tissue_kin (u);
 global  SUMMARY_ARRAY BREATH_FLAG
 
-op=[2000 2000 2000 2000 2000 2000 2000 2000 2000 2000 2000 2000 2000 2000 2000];%
+op=[2000 2000 2000 2000 2000 2000 2000 2000 2000 2000 2000 2000 2000 2000 2000 2000 2000 2000 2000 2000 2000];%
 
-for i=15:15
+for i=14:14
     clear ALL 
     WHALE=i;%to be used in get_gas_flux to do differences in responses between whales
      

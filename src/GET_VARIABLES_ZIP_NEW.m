@@ -53,7 +53,7 @@ global nO2DOT_HEART_ORIGINAL nO2DOT_MUSCLE_ORIGINAL nO2DOT_BRAIN_ORIGINAL nO2DOT
 % INHALED_FRACTION: fraction of available capacity refilled at ambient dry
 % pressure (0=none; 1=to VLmax). Values can later vary per breath.
 % Defaults reproduce the current full-exhalation/full-inspiration experiment.
-EXHALED_FRACTION=1.0;%Can only be between 1 and 0;
+EXHALED_FRACTION=0.5;%.0;%Can only be between 1 and 0;
 INHALED_FRACTION=1.0;
 
 deltaT=1;%the time step of the data and to be used in calculations in sec
@@ -304,16 +304,17 @@ Q_TOT=(B_VOL_PACKAGE_VEN)/deltaT;%total blood flow gets modified to fit the assu
 
 
 %% TISSUE BLOOD FLOW ALLOCATION
-Q_HEART=0.25*Q_TOT; %31%fraction of blood flow to heart+kidney+liver, relative to VO2 to each organ, flow from heart kidney and splanchnic
-Q_FAT=0.03*Q_TOT;% < 1% to adipose tissueQ_TOT;
-Q_MUSCLE=0.65*Q_TOT;%Q_TOT 67% 18% to muscle and the rest fat skin and bone, alimentary etc
-Q_BRAIN=0.07*Q_TOT;%%brain 1.3%
-Q_AVSHUNT=0.0*Q_TOT;%AV shunt blood flow, let's start with 0
-%Q_HEART=0.31*Q_TOT; %31%fraction of blood flow to heart+kidney+splanchnic (liver and alimentary), relative to VO2 to each organ, flow from heart kidney and splanchnic
-%Q_FAT=0.015*Q_TOT;% < 1% to adipose tissueQ_TOT;
-%Q_MUSCLE=0.67*Q_TOT;%Q_TOT 67% 18% to muscle and the rest fat skin and bone etc
-%Q_BRAIN=0.015*Q_TOT;%%brain 1.3%
+Q_HEART=0.35*Q_TOT; %31%fraction of blood flow to heart+kidney+liver, relative to VO2 to each organ, flow from heart kidney and splanchnic
+Q_MUSCLE=0.635*Q_TOT;%Q_TOT 67% 18% to muscle and the rest fat skin and bone, alimentary etc
+Q_BRAIN=0.01*Q_TOT;%%brain 1.3%
+Q_FAT=0.005*Q_TOT;% < 1% to adipose tissueQ_TOT;
+%%%%%%%%%%%Original before Nov 5-2026
+%Q_HEART=0.25*Q_TOT; %31%fraction of blood flow to heart+kidney+liver, relative to VO2 to each organ, flow from heart kidney and splanchnic
+%Q_MUSCLE=0.65*Q_TOT;%Q_TOT 67% 18% to muscle and the rest fat skin and bone, alimentary etc
+%Q_BRAIN=0.07*Q_TOT;%%brain 1.3%
+%Q_FAT=0.03*Q_TOT;% < 1% to adipose tissueQ_TOT;
 %Q_AVSHUNT=0.0*Q_TOT;%AV shunt blood flow, let's start with 0
+%%%%%%%%%%%%%%%END original
 
 Q_TOT_INIT=Q_TOT;%The initial values that can be found again after dive bradycardia adjustment
 Q_HEART_INIT=Q_HEART;

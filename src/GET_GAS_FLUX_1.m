@@ -120,7 +120,8 @@ for i=2:N %for each data point
          DIVE_RESPONSE_FLAG=0;
          ADJ_BLOOD_VOL_LUNG_N2=B_VOL_PACKAGE_VEN*SN2_BLOOD;         
          COL_multiplier_surface=dsum(SI_no,10)/RMMR; %the COL for a dive in dsum, column 10 in l/O2 min, RMR from VO2_TOT in Get_variables
-           update_tissue_metabolic_rates(i,0.4,COL_multiplier_surface*adjust_muscle,0,0, Dive_no, DIVE_RESPONSE_FLAG);  %n
+         %update_tissue_metabolic_rates(i,0.4,COL_multiplier_surface*adjust_muscle,0,0,Dive_no, DIVE_RESPONSE_FLAG);  %ORIGINAL
+         update_tissue_metabolic_rates(i,0,0,0,0, Dive_no, DIVE_RESPONSE_FLAG);  %n
       elseif (dsum(Dive_no-1,7)) > 1050  
          if SONAR_FLAG(i-1,1)==1 %means last dive was no sonar so adjust perfusion with the same value
             adjust_Q_tachycardia(14,0.35,0.635,0.01,0.005,0.0, SI_no);%;%%Model  heart, muscle, brain, fat, %Original from Beaked whale 2025 paper
@@ -133,8 +134,9 @@ for i=2:N %for each data point
          disp('2a')
          DIVE_RESPONSE_FLAG=0;
          ADJ_BLOOD_VOL_LUNG_N2=B_VOL_PACKAGE_VEN*SN2_BLOOD;
-         COL_multiplier_surface=dsum(SI_no,10)/RMMR; %the COL for a dive in dsum, column 10 in l/O2 min, RMR from VO2_TOT in Get_variables
-        update_tissue_metabolic_rates(i,0.4,COL_multiplier_surface*adjust_muscle,0,0, Dive_no, DIVE_RESPONSE_FLAG); 
+        COL_multiplier_surface=dsum(SI_no,10)/RMMR; %the COL for a dive in dsum, column 10 in l/O2 min, RMR from VO2_TOT in Get_variables
+         %update_tissue_metabolic_rates(i,0.4,COL_multiplier_surface*adjust_muscle,0,0,Dive_no, DIVE_RESPONSE_FLAG);  %ORIGINAL
+         update_tissue_metabolic_rates(i,0,0,0,0, Dive_no, DIVE_RESPONSE_FLAG);  %n
       elseif (dsum(Dive_no-1,7)) > 60 
            adjust_Q_tachycardia(6,0.35,0.635,0.01,0.005,0.0, SI_no);%%Model B%%Model heart, muscle, brain, fatM5e
             disp('3a')
@@ -143,7 +145,8 @@ for i=2:N %for each data point
            ADJ_BLOOD_VOL_LUNG_N2=B_VOL_PACKAGE_VEN*SN2_BLOOD;
          
            COL_multiplier_surface=dsum(SI_no,10)/RMMR; %the COL for a dive in dsum, column 10 in l/O2 min, RMR from VO2_TOT in Get_variables
-           update_tissue_metabolic_rates(i,0.4,COL_multiplier_surface*adjust_muscle,0,0, Dive_no, DIVE_RESPONSE_FLAG); 
+         %update_tissue_metabolic_rates(i,0.4,COL_multiplier_surface*adjust_muscle,0,0,Dive_no, DIVE_RESPONSE_FLAG);  %ORIGINAL
+         update_tissue_metabolic_rates(i,0,0,0,0, Dive_no, DIVE_RESPONSE_FLAG);  %n
       else
            adjust_Q_tachycardia(1,0.35,0.635,0.01,0.005,0.0, SI_no);%%Model  heart, muscle, brain, fat 
            disp('4a')
@@ -152,9 +155,8 @@ for i=2:N %for each data point
            ADJ_BLOOD_VOL_LUNG_N2=B_VOL_PACKAGE_VEN*SN2_BLOOD;
          
            COL_multiplier_surface=dsum(SI_no,10)/RMMR; %the COL for a dive in dsum, column 10 in l/O2 min, RMR from VO2_TOT in Get_variables
-           %update_tissue_metabolic_rates(i,1,COL_multiplier_surface,1,1); 
-           %update_tissue_metabolic_rates(i,0,COL_multiplier_surface*1,0,0, Dive_no, DIVE_RESPONSE_FLAG);  %new muscle metabolism for lower based on allometry and fiber type
-           update_tissue_metabolic_rates(i,0.4,COL_multiplier_surface*adjust_muscle,0,0, Dive_no, DIVE_RESPONSE_FLAG); 
+         %update_tissue_metabolic_rates(i,0.4,COL_multiplier_surface*adjust_muscle,0,0,Dive_no, DIVE_RESPONSE_FLAG);  %ORIGINAL
+         update_tissue_metabolic_rates(i,0,0,0,0, Dive_no, DIVE_RESPONSE_FLAG);  %n
       end
            SI_no=SI_no+1;%dive ended/SI started so add SI number to counter
 

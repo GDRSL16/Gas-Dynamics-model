@@ -51,7 +51,18 @@ elseif i==14
      y=csvread('14-intermediate_10x1200s_400m_data.csv',1,0);%s
 elseif i==15
      y=csvread('15-deep_5x3000s_1200m_data.csv',1,0);%s
-    
+elseif i==16
+     y=csvread('16-1A-intermediate_20x1200s_400m_2h_pre_180s_SI_1h_post_data.csv',1,0);%s
+elseif i==17
+     y=csvread('17-1B-intermediate_20x1200s_400m_2h_pre_180s_SI_1h_post_data.csv',1,0);%s
+elseif i==18
+     y=csvread('18-1C-intermediate_20x1200s_400m_2h_pre_360s_SI_1h_post_data.csv',1,0);%
+elseif i==19
+     y=csvread('19-1D-intermediate_20x1200s_400m_2h_pre_180s_SI_1h_post_data.csv',1,0);%s
+elseif i==20
+     y=csvread('20-1E-intermediate_20x1200s_400m_10h_pre_3bpm_180s_SI_10h_post_data.csv',1,0);%s
+elseif i==21
+     y=csvread('21-1F-intermediate_20x1200s_400m_2h_pre_1bpm_180s_SI_1h_post_data.csv',1,0);%s
 end
 %fullfilename=[pathname,filename];
   

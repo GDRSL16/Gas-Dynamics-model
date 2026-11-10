@@ -40,8 +40,8 @@ if dive_response_flag==1 %start of dive alter metabolism
    METABOLIC_RATES(dive_no,5)=nCO2DOT_FAT;%diving adjusted MR of fat
    METABOLIC_RATES(dive_no,6)=nCO2DOT_HEART+nCO2DOT_MUSCLE+nCO2DOT_BRAIN+nCO2DOT_FAT;%diving adjusted total MR
 elseif dive_response_flag==0 %start of surface interval   
-   nO2DOT_HEART=nO2DOT_HEART_ORIGINAL*multiplier_ht+nO2DOT_HEART_ORIGINAL;%the "new" metabiolic rate is original [BMR]+COL
-   nO2DOT_MUSCLE=nO2DOT_MUSCLE_ORIGINAL*multiplier_mus+nO2DOT_MUSCLE_ORIGINAL;
+   nO2DOT_HEART=nO2DOT_HEART_ORIGINAL*multiplier_ht+nO2DOT_HEART_ORIGINAL;
+   nO2DOT_MUSCLE=nO2DOT_MUSCLE_ORIGINAL*multiplier_mus+nO2DOT_MUSCLE_ORIGINAL;%the "new" metabiolic rate is original [BMR]+COL
    nO2DOT_BRAIN=nO2DOT_BRAIN_ORIGINAL*multiplier_brain+nO2DOT_BRAIN_ORIGINAL;
    nO2DOT_FAT=nO2DOT_FAT_ORIGINAL*multiplier_fat+nO2DOT_FAT_ORIGINAL;
    

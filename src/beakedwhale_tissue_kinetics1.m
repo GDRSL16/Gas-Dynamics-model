@@ -37,6 +37,12 @@ if isempty(prefixes)
      '13-Short-Shallow'
      '14-intermediate'
      '15-deep'
+     'Model-1A-16-intermediate_20x1200s_400m_2h_pre_3bpm_180s_SI_1h_post'
+     'Model-1B-17-intermediate_20x1200s_400m_2h_pre_6bpm_180s_SI_1h_post'
+     'Model-1C-18-intermediate_20x1200s_400m_2h_pre_3bpm_360s_SI_1h_post'
+     'Model-1D-19-intermediate_20x1200s_400m_2h_pre_3bpm_360-180s_SI_1h_post'
+     'Model-1E-20-intermediate_20x1200s_400m_10h_pre-post_3bpm_180s_SI_10h_post'
+     '21-Model-1F-intermediate_20x1200s_400m_2h_pre_1bpm_180s_SI_1h_post'
 };
  headers.summary = {'N2					O2					CO2					PN2-blood	    PO2-blood	PCO2-blood	Pamb	Alv	Trac	Shunt	ODBA	COL'
 'Heart	Muscle	Brain	Fat	Lung	Heart	Muscle	Brain	Fat	Lung	Heart	Muscle	Brain	Fat	Lung	Art	Ven	Art	Ven	Art	Ven	Pamb	Alv	Trac	Shunt	ODBA	COL'};
@@ -185,7 +191,7 @@ if ~isempty(QTOTARRAY)
     saveTabWithHeader(fullfile(outFolder, [base '-QTOTARRAY.txt']), QTOTARRAY, headers.QTOTARRAY);
 end
 if ~isempty(STORES)
-    saveTabWithHeader(fullfile(outFolder, [base '-STORES.txt']), STORES, headers.STORES);
+    saveTabWithHeader(fullfile(outFolder, [base '-STORES.txt']), STORES, headers.STORES); %STORES calculated in GET_O2_CO2_STORES
 end
 
 
